@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5000"; // ✅ Local Backend URL
+const API_BASE_URL = "https://hospitalwebsite-backend.onrender.com"; // ✅ Local Backend URL
 
 export const createAppointment = async (appointmentData) => {
   try {
