@@ -111,7 +111,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div
-            className="space-y-8"
+            className="space-y-8 container"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
@@ -170,7 +170,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <motion.div
-            className="bg-white rounded-2xl shadow-lg p-8"
+            className="bg-white rounded-2xl shadow-lg p-8 container"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
