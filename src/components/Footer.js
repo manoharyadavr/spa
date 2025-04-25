@@ -57,25 +57,28 @@ const Footer = () => {
         {/* Contact Info Column */}
         <div>
           <h3 className="text-xl font-semibold text-[#98A869] mb-4">Contact</h3>
-          <p className="mb-2">123 Wellness Street</p>
-          <p className="mb-2">City, Country, 45678</p>
+          <p className="mb-2">277/7, Rd Number 3, UBI Colony</p>
+          <p className="mb-2">Aurora Colony, Banjara Hills, Hyderabad</p>
+          <p className="mb-2">Telangana 500034</p>
+          
           <p className="mb-2">Email: info@nwellness.com</p>
           <p>Phone: +91 63018 46681</p>
         </div>
+
 
         {/* Social Media Column */}
         <div>
           <h3 className="text-xl font-semibold text-[#98A869] mb-4">Follow Us</h3>
           <div className="flex flex-col items-center space-y-4">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-[#98A869]/70 space-x-2 transition">
+            <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-[#98A869]/70 space-x-2 transition">
               <FontAwesomeIcon icon={faFacebook} className="w-6 h-6" />
               <span>Facebook</span>
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-[#98A869]/70 space-x-2 transition">
+            <a href="https://www.instagram.com/nwellness.in/" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-[#98A869]/70 space-x-2 transition">
               <FontAwesomeIcon icon={faInstagram} className="w-6 h-6" />
               <span>Instagram</span>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-[#98A869]/70 space-x-2 transition">
+            <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-[#98A869]/70 space-x-2 transition">
               <FontAwesomeIcon icon={faLinkedin} className="w-6 h-6" />
               <span>LinkedIn</span>
             </a>
