@@ -61,8 +61,8 @@ const Footer = () => {
           <p className="mb-2">Aurora Colony, Banjara Hills, Hyderabad</p>
           <p className="mb-2">Telangana 500034</p>
           
-          <p className="mb-2">Email: info@nwellness.com</p>
-          <p>Phone: +91 63018 46681</p>
+          <p className="mb-2">Email: nwellness.in@gmail.com</p>
+          <p>Phone: +91 9391803316</p>
         </div>
 
 

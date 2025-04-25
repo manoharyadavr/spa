@@ -111,7 +111,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div
-            className="space-y-8 container"
+            className="space-y-8 container "
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
@@ -132,7 +132,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-[#98A869]">Our Location</h3>
-                  <p className="text-gray-600">123 Wellness Street, City, Country</p>
+                  <p className="text-gray-600">277/7, Rd Number 3 Banjara Hills, Hyderabad, Telangana</p>
                 </div>
               </div>
 
@@ -142,7 +142,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-[#98A869]">Phone</h3>
-                  <p className="text-gray-600">+91 63018 46681</p>
+                  <p className="text-gray-600">+91 9391803316</p>
                 </div>
               </div>
 
@@ -152,7 +152,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-[#98A869]">Email</h3>
-                  <p className="text-gray-600">info@nwellness.com</p>
+                  <p className="text-gray-600">nwellness.in@gmail.com</p>
                 </div>
               </div>
 
