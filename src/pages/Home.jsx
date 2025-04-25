@@ -1,9 +1,12 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
-
-
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award } from "lucide-react";
 
 // Animation Variants
 const fadeIn = {
@@ -15,32 +18,80 @@ const fadeIn = {
   },
 };
 
-const testimonials = [
+const carouselSlides = [
   {
-    name: "John Doe",
-    designation: "CEO",
-    company: "TechSolutions Inc.",
-    logo: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600",
-    message: "BYV transformed our online presence with a sleek and modern website!",
-    rating: 5,
+    image: "https://images.pexels.com/photos/19666188/pexels-photo-19666188/free-photo-of-relaxation-in-the-massage-parlor.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    title: "Experience Ultimate Relaxation",
+    subtitle: "Discover our premium wellness services",
   },
   {
-    name: "Sarah Lee",
-    designation: "Marketing Head",
-    company: "BrandBoost",
-    logo: "https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg?auto=compress&cs=tinysrgb&w=600",
-    message: "Highly professional team! They delivered exactly what we needed.",
-    rating: 4.5,
+    image: "https://images.pexels.com/photos/6629601/pexels-photo-6629601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    title: "Holistic Wellness Journey",
+    subtitle: "Transform your mind, body, and soul",
   },
   {
-    name: "Michael Smith",
-    designation: "Founder",
-    company: "InnovateX",
-    logo: "https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg?auto=compress&cs=tinysrgb&w=600",
-    message: "BYV's web development services exceeded our expectations. Highly recommended!",
-    rating: 5,
+    image: "https://images.pexels.com/photos/161477/treatment-finger-keep-hand-161477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    title: "Luxury Spa Treatments",
+    subtitle: "Indulge in our signature therapies",
   },
 ];
+
+const services = [
+  {
+    title: "N Wellness Signature Body Treatment",
+    description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
+    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
+    price: "₹16,000",
+    duration: "3 hours",
+    icon: Award,
+    features: ["Full Body Treatment", "Premium Experience", "Complete Relaxation"],
+  },
+  {
+    title: "Japanese Head Spa",
+    description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
+    image: "https://static.wixstatic.com/media/35803c_09bbaa109a6f4910bf9d095cea46530e~mv2.jpg",
+    price: "₹6,500",
+    duration: "60 mins",
+    icon: Crown,
+    features: ["Deep scalp cleansing", "Head massage", "Premium hair treatment"],
+  },
+  {
+    title: "Body Polishing",
+    description: "Experience our signature 6-step Body Polishing Ritual.",
+    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
+    price: "₹8,999",
+    duration: "1.5 hours",
+    icon: Gem,
+    features: ["Full Body Treatment", "Skin Rejuvenation", "Natural Glow"],
+  },
+];
+
+// const testimonials = [
+//   {
+//     name: "Sarah Johnson",
+//     designation: "Yoga Enthusiast",
+//     company: "Wellness Journey",
+//     logo: "https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg",
+//     message: "The personalized wellness approach has completely transformed my daily routine. I feel more energized and balanced than ever before.",
+//     rating: 5,
+//   },
+//   {
+//     name: "Michael Chen",
+//     designation: "Business Professional",
+//     company: "Corporate Wellness",
+//     logo: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
+//     message: "The expert guidance and support have helped me manage stress and improve my overall well-being. Highly recommended!",
+//     rating: 4.5,
+//   },
+//   {
+//     name: "Emma Rodriguez",
+//     designation: "Fitness Instructor",
+//     company: "Health & Wellness",
+//     logo: "https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg",
+//     message: "The holistic approach to wellness has been life-changing. I've found a perfect balance between physical and mental health.",
+//     rating: 5,
+//   },
+// ];
 
 const Home = () => {
   const testimonialRef = useRef(null);
@@ -48,231 +99,341 @@ const Home = () => {
   const scrollLeft = () => {
     if (testimonialRef.current) {
       testimonialRef.current.scrollBy({ left: -350, behavior: "smooth" });
-      if (testimonialRef.current.scrollLeft === 0) {
-        testimonialRef.current.scrollLeft = testimonialRef.current.scrollWidth;
-      }
     }
   };
 
   const scrollRight = () => {
     if (testimonialRef.current) {
       testimonialRef.current.scrollBy({ left: 350, behavior: "smooth" });
-      if (
-        testimonialRef.current.scrollLeft + testimonialRef.current.clientWidth >=
-        testimonialRef.current.scrollWidth
-      ) {
-        testimonialRef.current.scrollLeft = 0;
-      }
     }
   };
 
   return (
-    <div className="bg-black text-white font-sans">
-
-      {/* ✅ Hero Section */}
-      <motion.div
-        className="relative w-full h-[500px] flex items-center justify-center text-center"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        
+    <div className="bg-[#FEDEB8]/5 text-[#98A869]">
+      {/* Carousel Section */}
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation]}
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={{ 
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true 
+        }}
+        pagination={{ 
+          clickable: true,
+          dynamicBullets: true,
+          renderBullet: (index, className) => {
+            return `<span class="${className}"></span>`;
+          }
+        }}
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }}
+        className="w-full h-[400px] sm:h-[500px] relative bg-[#98A869]/5"
       >
-        <img
-          src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="Hero"
-          className="absolute w-full h-full object-cover opacity-40"
-        />
-        <div className="relative z-10">
-          <h1 className="text-5xl font-extrabold tracking-wide text-white">
-            Build Your Vision.
-          </h1>
-          <p className="text-lg text-gray-400 mt-4">
-            I will build your vision from the scratch.
-          </p>
-          <Link to="/services">
-            <motion.button
-              className="mt-6 px-8 py-3 bg-gray-900 text-white font-semibold rounded-md shadow-lg hover:bg-gray-700 transition"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Explore Services
-            </motion.button>
-          </Link>
-        </div>
-      </motion.div>
+        {carouselSlides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <div className="relative w-full h-full">
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+              <div className="absolute inset-0 flex items-center justify-center text-center px-4">
+                <div className="max-w-4xl mx-auto">
+                  <motion.h1
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
+                    {slide.title}
+                  </motion.h1>
+                  <motion.p
+                    className="text-sm sm:text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                  >
+                    {slide.subtitle}
+                  </motion.p>
+                  <Link to="/services">
+                    <motion.button
+                      className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-xs sm:text-sm"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Explore Our Services
+                    </motion.button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      {/* About Section */}
+       <motion.div 
+         className="container mx-auto px-4 sm:px-6 py-12 sm:py-20 bg-white"
+         initial="hidden"
+         whileInView="visible"
+         viewport={{ once: true, amount: 0.2 }}
+         variants={fadeIn}
+       >
+         <motion.h2 
+           className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#98A869] text-center mb-8 sm:mb-16"
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+         >
+           About Our Wellness Center
+         </motion.h2>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
+           <motion.div
+             initial={{ opacity: 0, x: -20 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             viewport={{ once: true }}
+             transition={{ duration: 0.6 }}
+           >
+             <p className="text-base sm:text-lg text-[#98A869]/80 leading-relaxed mb-6 sm:mb-8">
+               At our wellness center, we believe in a holistic approach to health and well-being. 
+               Our expert team of practitioners is dedicated to helping you achieve optimal wellness 
+               through personalized treatments and therapies.
+             </p>
+             <div className="space-y-3 sm:space-y-4">
+               {["Personalized wellness plans", "Expert practitioners", "State-of-the-art facilities"].map((item, index) => (
+                 <motion.div 
+                   key={index}
+                   className="flex items-center space-x-3"
+                   initial={{ opacity: 0, x: -20 }}
+                   whileInView={{ opacity: 1, x: 0 }}
+                   viewport={{ once: true }}
+                   transition={{ delay: index * 0.1 }}
+                 >
+                   <CheckCircle className="text-[#98A869] w-5 h-5 sm:w-6 sm:h-6" />
+                   <span className="text-[#98A869]/90 text-sm sm:text-base">{item}</span>
+                 </motion.div>
+               ))}
+             </div>
+           </motion.div>
+           <motion.div 
+             className="relative group mt-8 md:mt-0"
+             initial={{ opacity: 0, x: 20 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             viewport={{ once: true }}
+             transition={{ duration: 0.6 }}
+           >
+             <div className="absolute -inset-1 bg-gradient-to-r from-[#98A869] to-[#FEDEB8] rounded-3xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+             <img
+               src="https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg"
+               alt="Wellness Center Interior"
+               className="relative w-full h-full object-cover rounded-3xl shadow-xl transform group-hover:scale-[1.02] transition duration-700"
+             />
+           </motion.div>
+         </div>
+       </motion.div>
 
-      {/* ✅ About Section */}
+      {/* Services Section */}
       <motion.div
-        className="bg-[#1A1A1A] px-6 md:px-20 py-12 rounded-lg shadow-md border border-gray-700 mt-16"
+        className="container mx-auto px-4 sm:px-6 py-12 sm:py-20 overflow-hidden bg-[#FEDEB8]/10"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
       >
-        <h2 className="text-3xl font-bold text-center text-white mb-8">About Us</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          {/* Left - Text */}
-          <div className="text-gray-300 text-base leading-relaxed md:text-lg text-justify">
-            <p>
-              <strong>At BYV – Build Your Vision</strong>, we specialize in crafting exceptional digital experiences
-              that empower businesses to thrive online. As a premium website solutions provider, we go beyond just
-              design — we deliver strategically built, high-performance websites tailored to your unique goals.
-            </p>
-            <br />
-            <p>
-              With a team of passionate developers, creative designers, and strategic thinkers, BYV helps businesses
-              build a strong online presence that reflects their brand, engages their audience, and drives real results.
-              Whether you're launching your first website or scaling your digital footprint, we're here to bring your
-              vision to life with precision, creativity, and care.
-            </p>
-          </div>
-
-          {/* Right - Image */}
-          <motion.img
-            src="https://images.pexels.com/photos/2882509/pexels-photo-2882509.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt="Who We Are"
-            className="w-full h-80 object-cover rounded-lg shadow-md"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          />
-        </div>
-      </motion.div>
-
-      {/* ✅ Services Section */}
-      <div className="bg-gray-900 py-16 text-center px-4">
-        <motion.h2
-          className="text-4xl font-bold text-white mb-10"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          Our Services
-        </motion.h2>
-
-        <div className="flex flex-wrap justify-center gap-8">
-          {[
-            {
-              title: "Website Development",
-              description: "Responsive, fast, and custom-built websites tailored to your brand and business goals.",
-            },
-            {
-              title: "E-commerce Solutions",
-              description: "Fully functional online stores with payment integration, product management & order tracking.",
-            },
-            {
-              title: "Website Maintenance",
-              description: "Regular updates, security patches, and performance enhancements to keep your site running smoothly.",
-            },
-            {
-              title: "Website Redesign",
-              description: "Give your outdated website a fresh, modern look with improved functionality and UX.",
-            },
-          ].map((service, index) => (
-            <motion.div
-              key={index}
-              className="bg-black text-white p-8 rounded-lg shadow-md w-80 text-left border border-gray-700 hover:bg-gray-800 transition duration-300"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.4 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-              <p className="text-gray-400 text-sm">{service.description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* ✅ Testimonials Section */}
-      <motion.div
-        className="py-16 bg-black text-white relative"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeIn}
-      >
-        <h2 className="text-4xl font-bold text-center mb-12">What Our Clients Say</h2>
-
-        <div className="relative max-w-7xl mx-auto px-4 flex items-center">
-          <button
-            className="absolute left-0 z-10 bg-gray-800 text-white px-3 py-2 rounded-full hover:bg-gray-600 transition"
-            onClick={scrollLeft}
-          >
-            ◀
-          </button>
-
-          <div
-            ref={testimonialRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-4 md:px-12 w-full justify-start md:justify-center"
-          >
-            {testimonials.map((testimonial, index) => (
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Our Signature Services</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
               <motion.div
                 key={index}
-                className="bg-gray-900 p-6 rounded-lg shadow-md min-w-[280px] max-w-[320px] text-center flex flex-col items-center flex-shrink-0 mx-auto"
-                initial={{ opacity: 0, y: 30 }}
+                className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.15 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ delay: index * 0.1 }}
               >
-                <div className="mb-4">
+                <div className="relative">
                   <img
-                    src={testimonial.logo}
-                    alt={testimonial.company}
-                    className="w-20 h-20 rounded-full object-cover mx-auto"
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-40 sm:h-48 object-cover rounded-lg mb-4"
+                  />
+                  <div className="absolute top-4 right-4 bg-[#98A869] p-2 sm:p-3 rounded-full text-white">
+                    <Icon size={20} className="w-4 h-4 sm:w-6 sm:h-6" />
+                  </div>
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2">{service.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">{service.description}</p>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-[#98A869] font-semibold text-sm sm:text-base">{service.price}</span>
+                  <span className="text-gray-500 flex items-center text-sm sm:text-base">
+                    <Clock size={16} className="mr-1" />
+                    {service.duration}
+                  </span>
+                </div>
+                <ul className="space-y-2 mb-4">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center text-gray-600 text-sm sm:text-base">
+                      <CheckCircle size={16} className="text-[#98A869] mr-2" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={`https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20${encodeURIComponent(service.title)}%20(${service.price},%20${service.duration})%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-2 bg-[#98A869] text-white text-center rounded-full hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base"
+                >
+                  Book Now
+                </a>
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.div>
+
+      {/* Why Choose Us Section */}
+      <motion.div
+        className="bg-white py-12 sm:py-20 overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeIn}
+      >
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Why Choose N Wellness</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            {[
+              {
+                image: "https://cdn-icons-png.flaticon.com/512/16505/16505190.png",
+                title: "Expert Therapists",
+                description: "Our certified professionals ensure the highest quality of service.",
+              },
+              {
+                image: "https://cdn-icons-png.freepik.com/256/15396/15396673.png?ga=GA1.1.1966422209.1745557003&semt=ais_hybrid",
+                title: "Premium Products",
+                description: "We use only the finest natural and organic products.",
+              },
+              {
+                image: "https://cdn-icons-png.flaticon.com/128/17835/17835525.png",
+                title: "Holistic Approach",
+                description: "We focus on your complete well-being and relaxation.",
+              },
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                className="bg-[#FEDEB8]/5 p-6 sm:p-8 rounded-2xl shadow-lg text-center hover:bg-[#FEDEB8]/10 transition-colors duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <img
+                    src={feature.image}
+                    alt={feature.title}
+                    className="w-full h-full object-cover rounded-full"
                   />
                 </div>
-                <p className="italic text-gray-400 text-base leading-relaxed mb-4 px-2">
-                  "{testimonial.message}"
-                </p>
-                <h4 className="font-bold text-lg text-white">{testimonial.name}</h4>
-                <p className="text-gray-400 text-sm">
-                  {testimonial.designation}, {testimonial.company}
-                </p>
-                <div className="mt-2 text-yellow-500 text-lg">
-                  {"⭐".repeat(Math.floor(testimonial.rating))}
-                  {testimonial.rating % 1 !== 0 && "⭐"}
-                </div>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
               </motion.div>
             ))}
           </div>
-
-          <button
-            className="absolute right-0 z-10 bg-gray-800 text-white px-3 py-2 rounded-full hover:bg-gray-600 transition"
-            onClick={scrollRight}
-          >
-            ▶
-          </button>
         </div>
       </motion.div>
 
-      {/* ✅ Contact Section */}
+      {/* Testimonials Section */}
+      {/* <motion.div
+        className="py-12 sm:py-20 bg-white overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeIn}
+      >
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">What Our Clients Say</h2>
+          <div className="relative max-w-7xl mx-auto">
+            <button
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#98A869] text-white p-2 rounded-full hover:bg-[#98A869]/90 transition-colors duration-200"
+              onClick={scrollLeft}
+            >
+              ◀
+            </button>
+            <div
+              ref={testimonialRef}
+              className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-4"
+            >
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-[#FEDEB8]/20 p-4 sm:p-6 rounded-2xl min-w-[280px] sm:min-w-[300px] max-w-[350px] flex-shrink-0"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.4, delay: index * 0.15 }}
+                >
+                  <div className="flex items-center mb-4">
+                    <img
+                      src={testimonial.logo}
+                      alt={testimonial.name}
+                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
+                    />
+                    <div className="ml-4">
+                      <h4 className="font-semibold text-sm sm:text-base">{testimonial.name}</h4>
+                      <p className="text-xs sm:text-sm text-gray-600">
+                        {testimonial.designation}, {testimonial.company}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-sm sm:text-base text-gray-600 italic mb-4">"{testimonial.message}"</p>
+                  <div className="text-[#98A869]">
+                    {"⭐".repeat(Math.floor(testimonial.rating))}
+                    {testimonial.rating % 1 !== 0 && "⭐"}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            <button
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-[#98A869] text-white p-2 rounded-full hover:bg-[#98A869]/90 transition-colors duration-200"
+              onClick={scrollRight}
+            >
+              ▶
+            </button>
+          </div>
+        </div>
+      </motion.div> */}
+
+      {/* CTA Section */}
       <motion.div
-        className="py-16 text-center bg-gray-900 text-white"
+        className="py-12 sm:py-20 bg-[#98A869] text-white text-center overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.7 }}
       >
-        <h2 className="text-4xl font-bold">Get in Touch</h2>
-        <p className="mt-4 text-gray-400 text-lg max-w-xl mx-auto">
-          Have a project in mind? Let's build something great together. Whether you're launching a new brand,
-          upgrading your website, or creating something totally custom — we’re here to turn your ideas into
-          impact.
-        </p>
-        <Link to="/contact">
-          <motion.button
-            className="mt-6 px-8 py-3 bg-gray-800 text-white font-semibold rounded-md hover:bg-gray-700 transition"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Contact Us
-          </motion.button>
-        </Link>
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Ready to Start Your Wellness Journey?</h2>
+          <p className="text-base sm:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto">
+            Take the first step towards a healthier, happier you. Our team is here to guide you every step of the way.
+          </p>
+          <Link to="/contact">
+            <motion.button
+              className="px-6 py-2.5 bg-white text-[#98A869] rounded-full hover:bg-[#FEDEB8] transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-sm"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Book Your Session
+            </motion.button>
+          </Link>
+        </div>
       </motion.div>
     </div>
   );
