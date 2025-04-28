@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { CheckCircle, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { sendContactEmail } from '../services/emailService';
 
 // Animation Variant
 const fadeInUp = {
@@ -20,24 +21,40 @@ const Contact = () => {
     email: "",
     contactNumber: "",
     message: "",
+    subject: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
 
     try {
-      await axios.post("http://localhost:5000/api/contact", formData);
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", contactNumber: "", message: "" });
-      setTimeout(() => setIsSubmitted(false), 4000);
-    } catch (err) {
-      setError("Something went wrong. Please try again later.");
+      await sendContactEmail({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message
+      });
+
+      setSuccess(true);
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      setError(error.message || 'Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -226,6 +243,21 @@ const Contact = () => {
 
               <div>
                 <label className="block text-gray-700 mb-2">
+                  Subject <span className="text-[#98A869]">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter the subject"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 mb-2">
                   Message <span className="text-[#98A869]">*</span>
                 </label>
                 <textarea
@@ -244,8 +276,9 @@ const Contact = () => {
                 className="w-full bg-[#98A869] text-white py-3 font-semibold rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                disabled={loading}
               >
-                Send Message
+                {loading ? 'Sending...' : 'Send Message'}
               </motion.button>
             </form>
 

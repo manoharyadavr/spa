@@ -6,7 +6,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award } from "lucide-react";
+import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award, Flower2 } from "lucide-react";
 
 // Animation Variants
 const fadeIn = {
@@ -38,32 +38,159 @@ const carouselSlides = [
 
 const services = [
   {
-    title: "N Wellness Signature Body Treatment",
-    description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
-    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
-    price: "₹16,000",
-    duration: "3 hours",
-    icon: Award,
-    features: ["Full Body Treatment", "Premium Experience", "Complete Relaxation"],
-  },
-  {
     title: "Japanese Head Spa",
     description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
-    image: "https://static.wixstatic.com/media/35803c_09bbaa109a6f4910bf9d095cea46530e~mv2.jpg",
     price: "₹6,500",
     duration: "60 mins",
+    features: [
+      "Deep scalp cleansing",
+      "Head massage",
+      "Premium hair treatment"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_09bbaa109a6f4910bf9d095cea46530e~mv2.jpg",
     icon: Crown,
-    features: ["Deep scalp cleansing", "Head massage", "Premium hair treatment"],
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "Warm Stone Massage",
+    description: "Smooth, heated basalt stones glide over muscles to melt away tension and boost circulation.",
+    price: "₹6,500",
+    duration: "1 hour",
+    features: [
+      "Heated Stones",
+      "Deep Muscle Relief",
+      "Improved Circulation"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_50183bb0461c4b009a150141e7d6645c~mv2.jpg",
+    icon: Gem,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "Aromatherapy",
+    description: "A bespoke blend of pure essential oils is gently massaged into your skin.",
+    price: "₹6,500",
+    duration: "1 hour",
+    features: [
+      "Custom Oil Blend",
+      "Gentle Massage",
+      "Stress Relief"
+    ],
+    image: "https://static.wixstatic.com/media/11062b_dfa21cffaf4e47a58af7c90864f12e8e~mv2.jpg",
+    icon: Leaf,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Body Polishing",
     description: "Experience our signature 6-step Body Polishing Ritual.",
-    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
     price: "₹8,999",
     duration: "1.5 hours",
+    features: [
+      "Full Body Treatment",
+      "Skin Rejuvenation",
+      "Natural Glow"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
     icon: Gem,
-    features: ["Full Body Treatment", "Skin Rejuvenation", "Natural Glow"],
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
+  {
+    title: "Foot Reflexology",
+    description: "Targeted pressure massage on specific foot zones.",
+    price: "₹3,000",
+    duration: "35 minutes",
+    features: [
+      "Pressure Points",
+      "Stress Relief",
+      "Energy Balance"
+    ],
+    image: "https://static.wixstatic.com/media/11062b_813fb77531784479b999f3b30e30b90a~mv2.jpg",
+    icon: Footprints,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "OxyGlow Facial",
+    description: "A 9-step facial treatment for radiant, glowing skin.",
+    price: "₹6,500",
+    duration: "1 hour",
+    features: [
+      "Deep Cleansing",
+      "Oxygen Therapy",
+      "Skin Brightening"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_094ebf58bffd40feb78aa77596c2e663~mv2.jpg",
+    icon: Smile,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "O3+ Facial",
+    description: "A professional-grade facial using active oxygen and high-performance ingredients.",
+    price: "₹6,500",
+    duration: "1 hour",
+    features: [
+      "Active Oxygen",
+      "Premium Products",
+      "Deep Nourishment"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_113a7fcb32bb47969456fdeb07475e81~mv2.jpg",
+    icon: Star,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "Bridal Facial",
+    description: "A luxurious skin prep ritual designed to give every bride a radiant, photo-ready glow.",
+    price: "₹6,900",
+    duration: "1.25 hours",
+    features: [
+      "Bridal Glow",
+      "Photo-Ready Skin",
+      "Premium Care"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_13809a2fc8784eefb36a14ec546f5caf~mv2.jpg",
+    icon: Crown,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "Shirodhara Therapy",
+    description: "An Ayurvedic therapy where a steady stream of warm herbal oil is poured over the forehead.",
+    price: "₹5,500",
+    duration: "45 minutes",
+    features: [
+      "Ayurvedic Treatment",
+      "Stress Relief",
+      "Mental Clarity"
+    ],
+    image: "https://static.wixstatic.com/media/11062b_4859fbc341c043aca2ae24ea0f44c420~mv2.jpeg",
+    icon: Flower2,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "Sound Therapy",
+    description: "Immerse yourself in the healing vibrations of Sound Therapy.",
+    price: "₹2,000",
+    duration: "15 minutes",
+    features: [
+      "Healing Vibrations",
+      "Deep Relaxation",
+      "Energy Balance"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
+    icon: Music,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  },
+  {
+    title: "N Wellness Signature Body Treatment",
+    description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
+    price: "₹16,000",
+    duration: "3 hours",
+    features: [
+      "Full Body Treatment",
+      "Premium Experience",
+      "Complete Relaxation"
+    ],
+    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
+    icon: Award,
+    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  }
 ];
 
 // const testimonials = [
@@ -190,7 +317,7 @@ const Home = () => {
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
          >
-           About Our Wellness Center
+           About Our N Wellness Studio
          </motion.h2>
          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
            <motion.div
@@ -200,7 +327,7 @@ const Home = () => {
              transition={{ duration: 0.6 }}
            >
              <p className="text-base sm:text-lg text-[#98A869]/80 leading-relaxed mb-6 sm:mb-8">
-               At our wellness center, we believe in a holistic approach to health and well-being. 
+               At our N wellness center, we believe in a holistic approach to health and well-being. 
                Our expert team of practitioners is dedicated to helping you achieve optimal wellness 
                through personalized treatments and therapies.
              </p>
@@ -246,7 +373,7 @@ const Home = () => {
         variants={fadeIn}
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Our Signature Services</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -262,34 +389,34 @@ const Home = () => {
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-40 sm:h-48 object-cover rounded-lg mb-4"
+                    className="w-full h-32 sm:h-40 object-cover rounded-lg mb-4"
                   />
-                  <div className="absolute top-4 right-4 bg-[#98A869] p-2 sm:p-3 rounded-full text-white">
-                    <Icon size={20} className="w-4 h-4 sm:w-6 sm:h-6" />
+                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-[#98A869] p-1.5 sm:p-2 rounded-full text-white">
+                    <Icon size={16} className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-4">{service.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 line-clamp-2">{service.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-4 line-clamp-2">{service.description}</p>
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-[#98A869] font-semibold text-sm sm:text-base">{service.price}</span>
-                  <span className="text-gray-500 flex items-center text-sm sm:text-base">
-                    <Clock size={16} className="mr-1" />
+                  <span className="text-gray-500 flex items-center text-xs sm:text-sm">
+                    <Clock size={14} className="mr-1" />
                     {service.duration}
                   </span>
                 </div>
-                <ul className="space-y-2 mb-4">
+                <ul className="space-y-1 sm:space-y-2 mb-4">
                   {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600 text-sm sm:text-base">
-                      <CheckCircle size={16} className="text-[#98A869] mr-2" />
-                      {feature}
+                    <li key={idx} className="flex items-center text-gray-600 text-xs sm:text-sm">
+                      <CheckCircle size={14} className="text-[#98A869] mr-2 flex-shrink-0" />
+                      <span className="line-clamp-1">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 <a
-                  href={`https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20${encodeURIComponent(service.title)}%20(${service.price},%20${service.duration})%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment.`}
+                  href={service.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-2 bg-[#98A869] text-white text-center rounded-full hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base"
+                  className="block w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm"
                 >
                   Book Now
                 </a>
@@ -309,7 +436,7 @@ const Home = () => {
       >
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Why Choose N Wellness</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
             {[
               {
                 image: "https://cdn-icons-png.flaticon.com/512/16505/16505190.png",
@@ -329,21 +456,21 @@ const Home = () => {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="bg-[#FEDEB8]/5 p-6 sm:p-8 rounded-2xl shadow-lg text-center hover:bg-[#FEDEB8]/10 transition-colors duration-300"
+                className="bg-[#FEDEB8]/5 p-4 sm:p-6 rounded-2xl shadow-lg text-center hover:bg-[#FEDEB8]/10 transition-colors duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.2 }}
               >
-                <div className="relative w-24 h-24 mx-auto mb-4">
+                <div className="relative w-16 h-16 sm:w-24 sm:h-24 mx-auto mb-4">
                   <img
                     src={feature.image}
                     alt={feature.title}
                     className="w-full h-full object-cover rounded-full"
                   />
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
+                <h3 className="text-base sm:text-lg font-semibold mb-2">{feature.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-600">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -420,13 +547,13 @@ const Home = () => {
         transition={{ duration: 0.7 }}
       >
         <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Ready to Start Your Wellness Journey?</h2>
-          <p className="text-base sm:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">Ready to Start Your Wellness Journey?</h2>
+          <p className="text-sm sm:text-base mb-6 sm:mb-8 max-w-2xl mx-auto">
             Take the first step towards a healthier, happier you. Our team is here to guide you every step of the way.
           </p>
           <Link to="/contact">
             <motion.button
-              className="px-6 py-2.5 bg-white text-[#98A869] rounded-full hover:bg-[#FEDEB8] transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-sm"
+              className="px-4 sm:px-6 py-2 sm:py-2.5 bg-white text-[#98A869] rounded-full hover:bg-[#FEDEB8] transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-sm"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

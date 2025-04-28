@@ -38,7 +38,11 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
+<<<<<<< HEAD
             About Our Wellness Studio
+=======
+            About Our N Wellness Center
+>>>>>>> b5204d8 (updated wellness to n wellness and the home page services)
           </motion.h1>
           <motion.p 
             className="text-xl text-[#FEDEB8]/90 mb-8"
@@ -99,7 +103,7 @@ const About = () => {
             {/* Right - Text */}
             <div className="space-y-6 text-justify sm:text-left">
               <p className="text-[#98A869]/90 text-lg leading-relaxed">
-                <strong className="text-[#98A869] text-xl">At our N Wellness Center</strong>, we are dedicated to providing a sanctuary for holistic healing and personal growth. 
+                <strong className="text-[#98A869] text-xl">At our N Wellness Studio</strong>, we are dedicated to providing a sanctuary for holistic healing and personal growth. 
                 Our team of experienced practitioners brings together traditional wisdom and modern wellness practices to create 
                 a truly transformative experience for our clients.
               </p>
@@ -151,7 +155,7 @@ const About = () => {
             <div className="w-20 h-20  rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition duration-500">
               <span className="text-4xl"><img src="https://cdn-icons-png.flaticon.com/128/1322/1322236.png" alt="experience icon image" /></span>
             </div>
-            <h2 className="text-3xl font-bold mb-6 text-[#98A869]">Wellness Experience</h2>
+            <h2 className="text-3xl font-bold mb-6 text-[#98A869]">N Wellness Experience</h2>
             <div className="space-y-4">
               <p className="text-[#98A869]/80 text-lg">
                 Immerse yourself in our tranquil environment designed for ultimate relaxation and rejuvenation.
