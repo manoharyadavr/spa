@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/manoharyadavr/spa.git/static/css/main.af56ae2c.css",
-    "main.js": "/manoharyadavr/spa.git/static/js/main.2eaea334.js",
-    "index.html": "/manoharyadavr/spa.git/index.html",
-    "main.af56ae2c.css.map": "/manoharyadavr/spa.git/static/css/main.af56ae2c.css.map",
-    "main.2eaea334.js.map": "/manoharyadavr/spa.git/static/js/main.2eaea334.js.map"
+    "main.css": "/static/css/main.a21e29a6.css",
+    "main.js": "/static/js/main.af4088b6.js",
+    "index.html": "/index.html",
+    "main.a21e29a6.css.map": "/static/css/main.a21e29a6.css.map",
+    "main.af4088b6.js.map": "/static/js/main.af4088b6.js.map"
   },
   "entrypoints": [
-    "static/css/main.af56ae2c.css",
-    "static/js/main.2eaea334.js"
+    "static/css/main.a21e29a6.css",
+    "static/js/main.af4088b6.js"
   ]
 }
