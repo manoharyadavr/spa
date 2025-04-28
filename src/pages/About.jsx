@@ -38,11 +38,7 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-<<<<<<< HEAD
-            About Our Wellness Studio
-=======
             About Our N Wellness Center
->>>>>>> b5204d8 (updated wellness to n wellness and the home page services)
           </motion.h1>
           <motion.p 
             className="text-xl text-[#FEDEB8]/90 mb-8"
