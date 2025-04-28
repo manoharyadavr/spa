@@ -327,7 +327,7 @@ const Home = () => {
              transition={{ duration: 0.6 }}
            >
              <p className="text-base sm:text-lg text-[#98A869]/80 leading-relaxed mb-6 sm:mb-8">
-               At our N wellness center, we believe in a holistic approach to health and well-being. 
+               At our N wellness studio, we believe in a holistic approach to health and well-being. 
                Our expert team of practitioners is dedicated to helping you achieve optimal wellness 
                through personalized treatments and therapies.
              </p>
