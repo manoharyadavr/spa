@@ -174,20 +174,20 @@ const services = [
     icon: Flower2,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
-  {
-    title: "Sound Therapy",
-    description: "Immerse yourself in the healing vibrations of Sound Therapy.",
-    price: "₹2,000",
-    duration: "15 minutes",
-    features: [
-      "Healing Vibrations",
-      "Deep Relaxation",
-      "Energy Balance"
-    ],
-    image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
-    icon: Music,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
-  },
+  // {
+  //   title: "Sound Therapy",
+  //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
+  //   price: "₹2,000",
+  //   duration: "15 minutes",
+  //   features: [
+  //     "Healing Vibrations",
+  //     "Deep Relaxation",
+  //     "Energy Balance"
+  //   ],
+  //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
+  //   icon: Music,
+  //   whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  // },
   {
     title: "N Wellness Signature Body Treatment",
     description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
