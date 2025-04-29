@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000' || "https://spabackend-nd53.onrender.com";
+const API_URL = process.env.REACT_APP_API_URL || "https://spabackend-nd53.onrender.com";
 
 export const sendContactEmail = async (contactData) => {
   try {
