@@ -89,7 +89,21 @@ const Footer = () => {
 
       {/* Footer Text */}
       <div className="text-center mt-4 border-t border-[#98A869]/20 pt-4">
-        <p>&copy; {new Date().getFullYear()} N Wellness. All rights reserved.</p>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
+          <p className="text-sm sm:text-base">&copy; {new Date().getFullYear()} N Wellness. All rights reserved.</p>
+          <span className="hidden sm:inline">|</span>
+          <p className="text-sm sm:text-base">
+            Developed by{" "}
+            <a 
+              href="https://www.buildyourvision.in" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-[#98A869]/70 transition font-medium"
+            >
+              Build Your Vision
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
