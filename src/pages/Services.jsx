@@ -52,13 +52,13 @@ const services = [
     title: "Japanese Head Spa",
     description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
     price: "₹6,500",
-    duration: "60 mins",
+    duration: "1 hour",
     features: [
       "Deep scalp cleansing",
       "Head massage",
       "Premium hair treatment"
     ],
-    image: "https://static.wixstatic.com/media/35803c_09bbaa109a6f4910bf9d095cea46530e~mv2.jpg",
+    image: "/images/japaneseHeadSpa.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -72,7 +72,7 @@ const services = [
       "Deep Muscle Relief",
       "Improved Circulation"
     ],
-    image: "https://static.wixstatic.com/media/35803c_50183bb0461c4b009a150141e7d6645c~mv2.jpg",
+    image: "/images/warmStoneMassage.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -86,7 +86,7 @@ const services = [
       "Gentle Massage",
       "Stress Relief"
     ],
-    image: "https://static.wixstatic.com/media/11062b_dfa21cffaf4e47a58af7c90864f12e8e~mv2.jpg",
+    image: "/images/aromatherapy.jpg",
     icon: Leaf,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -100,7 +100,7 @@ const services = [
       "Skin Rejuvenation",
       "Natural Glow"
     ],
-    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
+    image: "/images/bodyPolishing.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -114,7 +114,7 @@ const services = [
       "Stress Relief",
       "Energy Balance"
     ],
-    image: "https://static.wixstatic.com/media/11062b_813fb77531784479b999f3b30e30b90a~mv2.jpg",
+    image: "/images/footReflexology.jpg",
     icon: Footprints,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -128,7 +128,7 @@ const services = [
       "Oxygen Therapy",
       "Skin Brightening"
     ],
-    image: "https://static.wixstatic.com/media/35803c_094ebf58bffd40feb78aa77596c2e663~mv2.jpg",
+    image: "/images/oxyglowFacial.jpg",
     icon: Smile,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -142,7 +142,7 @@ const services = [
       "Premium Products",
       "Deep Nourishment"
     ],
-    image: "https://static.wixstatic.com/media/35803c_113a7fcb32bb47969456fdeb07475e81~mv2.jpg",
+    image: "images/o3+facial.jpg",
     icon: Star,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -156,7 +156,7 @@ const services = [
       "Photo-Ready Skin",
       "Premium Care"
     ],
-    image: "https://static.wixstatic.com/media/35803c_13809a2fc8784eefb36a14ec546f5caf~mv2.jpg",
+    image: "/images/bridalFacial.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -170,7 +170,7 @@ const services = [
       "Stress Relief",
       "Mental Clarity"
     ],
-    image: "https://static.wixstatic.com/media/11062b_4859fbc341c043aca2ae24ea0f44c420~mv2.jpeg",
+    image: "/images/shirodharaTherapy.jpg",
     icon: Flower2,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -198,7 +198,7 @@ const services = [
       "Premium Experience",
       "Complete Relaxation"
     ],
-    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
+    image: "/images/nwellnessSignature.png",
     icon: Award,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   }
@@ -238,7 +238,7 @@ const Services = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <img 
-            src="https://images.pexels.com/photos/11441410/pexels-photo-11441410.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            src="/images/servicesBreadCrumb.jpg"
             alt="Services Background"
             className="w-full h-full object-cover"
           />

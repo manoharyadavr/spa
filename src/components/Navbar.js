@@ -36,7 +36,7 @@ const Navbar = () => {
                 </Link>
               ))}
               <Link
-                to="/contact"
+                to="/services"
                 className="ml-4 px-6 py-2 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-colors duration-200 shadow-sm hover:shadow-md"
               >
                 Get Started
@@ -101,7 +101,7 @@ const Navbar = () => {
             </ul>
             <div className="mt-8">
               <Link
-                to="/contact"
+                to="/services"
                 className="block w-full text-center px-6 py-3 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-colors duration-200 shadow-sm"
                 onClick={toggleMobileMenu}
               >

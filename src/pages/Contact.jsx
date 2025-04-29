@@ -40,6 +40,7 @@ const Contact = () => {
       await sendContactEmail({
         name: formData.name,
         email: formData.email,
+        contactNumber: formData.contactNumber,
         subject: formData.subject,
         message: formData.message
       });
@@ -48,6 +49,7 @@ const Contact = () => {
       setFormData({
         name: '',
         email: '',
+        contactNumber: '',
         subject: '',
         message: ''
       });
@@ -95,7 +97,7 @@ const Contact = () => {
       >
         <div className="absolute w-full h-full">
           <img
-            src="https://images.pexels.com/photos/7365442/pexels-photo-7365442.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            src="/images/contactBreadCrumb.jpg"
             alt="Contact Background"
             className="w-full h-full object-cover"
           />

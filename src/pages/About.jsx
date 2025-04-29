@@ -23,7 +23,7 @@ const About = () => {
         {/* Background Image with Gradient Overlay */}
         <div className="absolute w-full h-full">
           <img 
-            src="https://images.pexels.com/photos/3188/love-romantic-bath-candlelight.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"  
+            src="/images/aboutBreadCrumb.jpg"  
             alt="Luxury Spa Interior"
             className="w-full h-full object-cover"
           />
@@ -90,7 +90,7 @@ const About = () => {
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#98A869] to-[#FEDEB8] rounded-3xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
               <img 
-                src="https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                src="/images/aboutUs.jpeg" 
                 alt="Spa Treatment Room" 
                 className="relative w-full h-full object-cover rounded-3xl shadow-lg transform group-hover:scale-[1.02] transition duration-700"
               />
@@ -99,14 +99,9 @@ const About = () => {
             {/* Right - Text */}
             <div className="space-y-6 text-justify sm:text-left">
               <p className="text-[#98A869]/90 text-lg leading-relaxed">
-                <strong className="text-[#98A869] text-xl">At our N Wellness Studio</strong>, we are dedicated to providing a sanctuary for holistic healing and personal growth. 
-                Our team of experienced practitioners brings together traditional wisdom and modern wellness practices to create 
-                a truly transformative experience for our clients.
+                Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad’s finest women’s wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
               </p>
-              <p className="text-[#98A869]/80 text-lg leading-relaxed">
-                We believe that true wellness encompasses mind, body, and spirit. Our approach combines evidence-based therapies 
-                with ancient healing traditions to help you achieve optimal health and well-being. Whether you're seeking stress relief, 
-                physical healing, or spiritual growth, we're here to support your journey.
+              <p className="text-[#98A869]/80 text-lg leading-relaxed">Led by a passionate expert, every session is crafted with love, skill, and true attention to your wellbeing. Here, self-care becomes an art — and every visit, a journey back to yourself. Experience relaxation, transformation, and pure magic. Only at N Wellness.
               </p>
             </div>
           </div>
@@ -118,7 +113,7 @@ const About = () => {
           {/* Signature Treatments */}
           <div className="bg-[#FEDEB8]/10 p-10 rounded-3xl shadow-xl border border-[#98A869]/20 flex flex-col items-center text-center group hover:bg-[#FEDEB8]/20 transition duration-500">
             <div className="w-20 h-20  rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition duration-500">
-              <span className="text-4xl"><img src="https://cdn-icons-png.flaticon.com/128/14241/14241172.png" alt="signature treatments icon image" /></span>
+              <span className="text-4xl"><img src="/images/signatureTreatments.png" alt="signature treatments icon image" /></span>
             </div>
             <h2 className="text-3xl font-bold mb-6 text-[#98A869]">Signature Treatments</h2>
             <div className="space-y-4">
@@ -149,7 +144,7 @@ const About = () => {
           {/* Wellness Experience */}
           <div className="bg-[#FEDEB8]/10 p-10 rounded-3xl shadow-xl border border-[#98A869]/20 flex flex-col items-center text-center group hover:bg-[#FEDEB8]/20 transition duration-500">
             <div className="w-20 h-20  rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition duration-500">
-              <span className="text-4xl"><img src="https://cdn-icons-png.flaticon.com/128/1322/1322236.png" alt="experience icon image" /></span>
+              <span className="text-4xl"><img src="/images/nwellnessExperience.png" alt="experience icon image" /></span>
             </div>
             <h2 className="text-3xl font-bold mb-6 text-[#98A869]">N Wellness Experience</h2>
             <div className="space-y-4">
@@ -208,7 +203,7 @@ const About = () => {
         </motion.div>
 
         {/* Team Section */}
-        <motion.div className="mt-20" variants={fadeIn}>
+        {/* <motion.div className="mt-20" variants={fadeIn}>
           <h2 className="text-4xl font-bold text-center mb-12 text-[#98A869]">Meet Our Team</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -249,7 +244,7 @@ const About = () => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
 
       </motion.div>
     </div>

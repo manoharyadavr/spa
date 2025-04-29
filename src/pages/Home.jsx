@@ -20,17 +20,17 @@ const fadeIn = {
 
 const carouselSlides = [
   {
-    image: "https://images.pexels.com/photos/19666188/pexels-photo-19666188/free-photo-of-relaxation-in-the-massage-parlor.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    image: "/images/image1.png",
     title: "Experience Ultimate Relaxation",
     subtitle: "Discover our premium wellness services",
   },
   {
-    image: "https://images.pexels.com/photos/6629601/pexels-photo-6629601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    image: "/images/image2.png",
     title: "Holistic Wellness Journey",
     subtitle: "Transform your mind, body, and soul",
   },
   {
-    image: "https://images.pexels.com/photos/161477/treatment-finger-keep-hand-161477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    image: "/images/image3.png",
     title: "Luxury Spa Treatments",
     subtitle: "Indulge in our signature therapies",
   },
@@ -41,13 +41,13 @@ const services = [
     title: "Japanese Head Spa",
     description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
     price: "₹6,500",
-    duration: "60 mins",
+    duration: "1 hour",
     features: [
       "Deep scalp cleansing",
       "Head massage",
       "Premium hair treatment"
     ],
-    image: "https://static.wixstatic.com/media/35803c_09bbaa109a6f4910bf9d095cea46530e~mv2.jpg",
+    image: "/images/japaneseHeadSpa.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -61,7 +61,7 @@ const services = [
       "Deep Muscle Relief",
       "Improved Circulation"
     ],
-    image: "https://static.wixstatic.com/media/35803c_50183bb0461c4b009a150141e7d6645c~mv2.jpg",
+    image: "/images/warmStoneMassage.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -75,7 +75,7 @@ const services = [
       "Gentle Massage",
       "Stress Relief"
     ],
-    image: "https://static.wixstatic.com/media/11062b_dfa21cffaf4e47a58af7c90864f12e8e~mv2.jpg",
+    image: "/images/aromatherapy.jpg",
     icon: Leaf,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -89,7 +89,7 @@ const services = [
       "Skin Rejuvenation",
       "Natural Glow"
     ],
-    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
+    image: "/images/bodyPolishing.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -103,7 +103,7 @@ const services = [
       "Stress Relief",
       "Energy Balance"
     ],
-    image: "https://static.wixstatic.com/media/11062b_813fb77531784479b999f3b30e30b90a~mv2.jpg",
+    image: "/images/footReflexology.jpg",
     icon: Footprints,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -117,7 +117,7 @@ const services = [
       "Oxygen Therapy",
       "Skin Brightening"
     ],
-    image: "https://static.wixstatic.com/media/35803c_094ebf58bffd40feb78aa77596c2e663~mv2.jpg",
+    image: "/images/oxyglowFacial.jpg",
     icon: Smile,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -131,7 +131,7 @@ const services = [
       "Premium Products",
       "Deep Nourishment"
     ],
-    image: "https://static.wixstatic.com/media/35803c_113a7fcb32bb47969456fdeb07475e81~mv2.jpg",
+    image: "images/o3+facial.jpg",
     icon: Star,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -145,7 +145,7 @@ const services = [
       "Photo-Ready Skin",
       "Premium Care"
     ],
-    image: "https://static.wixstatic.com/media/35803c_13809a2fc8784eefb36a14ec546f5caf~mv2.jpg",
+    image: "/images/bridalFacial.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
@@ -159,10 +159,24 @@ const services = [
       "Stress Relief",
       "Mental Clarity"
     ],
-    image: "https://static.wixstatic.com/media/11062b_4859fbc341c043aca2ae24ea0f44c420~mv2.jpeg",
+    image: "/images/shirodharaTherapy.jpg",
     icon: Flower2,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
+  // {
+  //   title: "Sound Therapy",
+  //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
+  //   price: "₹2,000",
+  //   duration: "15 minutes",
+  //   features: [
+  //     "Healing Vibrations",
+  //     "Deep Relaxation",
+  //     "Energy Balance"
+  //   ],
+  //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
+  //   icon: Music,
+  //   whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  // },
   // {
   //   title: "Sound Therapy",
   //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
@@ -187,7 +201,7 @@ const services = [
       "Premium Experience",
       "Complete Relaxation"
     ],
-    image: "https://static.wixstatic.com/media/35803c_3a723c17f14742e69def4d3ba8ad817f~mv2.jpg",
+    image: "/images/nwellnessSignature.png",
     icon: Award,
     whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   }
@@ -326,12 +340,12 @@ const Home = () => {
              viewport={{ once: true }}
              transition={{ duration: 0.6 }}
            >
-             <p className="text-base sm:text-lg text-[#98A869]/80 leading-relaxed mb-6 sm:mb-8">
-               At our N wellness studio, we believe in a holistic approach to health and well-being. 
-               Our expert team of practitioners is dedicated to helping you achieve optimal wellness 
-               through personalized treatments and therapies.
-             </p>
-             <div className="space-y-3 sm:space-y-4">
+            <p className="text-[#98A869]/90 text-lg leading-relaxed">
+                Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad’s finest women’s wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
+              </p>
+              <p className="text-[#98A869]/80 text-lg leading-relaxed">Led by a passionate expert, every session is crafted with love, skill, and true attention to your wellbeing. Here, self-care becomes an art — and every visit, a journey back to yourself. Experience relaxation, transformation, and pure magic. Only at N Wellness.
+              </p>
+             {/* <div className="space-y-3 sm:space-y-4">
                {["Personalized wellness plans", "Expert practitioners", "State-of-the-art facilities"].map((item, index) => (
                  <motion.div 
                    key={index}
@@ -345,7 +359,7 @@ const Home = () => {
                    <span className="text-[#98A869]/90 text-sm sm:text-base">{item}</span>
                  </motion.div>
                ))}
-             </div>
+             </div> */}
            </motion.div>
            <motion.div 
              className="relative group mt-8 md:mt-0"
@@ -356,7 +370,7 @@ const Home = () => {
            >
              <div className="absolute -inset-1 bg-gradient-to-r from-[#98A869] to-[#FEDEB8] rounded-3xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
              <img
-               src="https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg"
+               src="/images/aboutUs.jpeg"
                alt="Wellness Center Interior"
                className="relative w-full h-full object-cover rounded-3xl shadow-xl transform group-hover:scale-[1.02] transition duration-700"
              />
@@ -439,17 +453,17 @@ const Home = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
             {[
               {
-                image: "https://cdn-icons-png.flaticon.com/512/16505/16505190.png",
+                image: "/images/expertTherapish.png",
                 title: "Expert Therapists",
                 description: "Our certified professionals ensure the highest quality of service.",
               },
               {
-                image: "https://cdn-icons-png.freepik.com/256/15396/15396673.png?ga=GA1.1.1966422209.1745557003&semt=ais_hybrid",
+                image: "/images/premium.png",
                 title: "Premium Products",
                 description: "We use only the finest natural and organic products.",
               },
               {
-                image: "https://cdn-icons-png.flaticon.com/128/17835/17835525.png",
+                image: "/images/holisticApproach.png",
                 title: "Holistic Approach",
                 description: "We focus on your complete well-being and relaxation.",
               },
@@ -551,7 +565,7 @@ const Home = () => {
           <p className="text-sm sm:text-base mb-6 sm:mb-8 max-w-2xl mx-auto">
             Take the first step towards a healthier, happier you. Our team is here to guide you every step of the way.
           </p>
-          <Link to="/contact">
+          <Link to="/services">
             <motion.button
               className="px-4 sm:px-6 py-2 sm:py-2.5 bg-white text-[#98A869] rounded-full hover:bg-[#FEDEB8] transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-sm"
               whileHover={{ scale: 1.05 }}
