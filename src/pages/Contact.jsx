@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { CheckCircle, MapPin, Phone, Mail, Clock } from "lucide-react";
 import { sendContactEmail } from '../services/emailService';
 
-// Animation Variant
+// Animation Variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -13,6 +13,38 @@ const fadeInUp = {
     y: 0,
     transition: { duration: 0.6, ease: "easeOut" },
   },
+};
+
+const successAnimation = {
+  initial: { scale: 0, opacity: 0 },
+  animate: { 
+    scale: 1, 
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 260,
+      damping: 20
+    }
+  },
+  exit: { 
+    scale: 0, 
+    opacity: 0,
+    transition: {
+      duration: 0.3
+    }
+  }
+};
+
+const checkmarkAnimation = {
+  initial: { pathLength: 0, opacity: 0 },
+  animate: { 
+    pathLength: 1, 
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      delay: 0.2
+    }
+  }
 };
 
 const Contact = () => {
@@ -23,10 +55,9 @@ const Contact = () => {
     message: "",
     subject: "",
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,7 +76,7 @@ const Contact = () => {
         message: formData.message
       });
 
-      setSuccess(true);
+      setShowSuccess(true);
       setFormData({
         name: '',
         email: '',
@@ -60,33 +91,59 @@ const Contact = () => {
     }
   };
 
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
+  };
+
   return (
     <div className="bg-[#FEDEB8]/5 min-h-screen">
-      {/* Success Overlay */}
-      <AnimatePresence>
-        {isSubmitted && (
+      {/* Success Modal */}
+      {showSuccess && (
+        <div className="fixed inset-0 bg-[#98A869]/90 backdrop-blur-sm flex items-center justify-center z-50">
           <motion.div
-            className="fixed inset-0 bg-[#98A869]/80 flex items-center justify-center z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            className="bg-white rounded-2xl p-8 shadow-2xl text-center max-w-md mx-4 relative overflow-hidden"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
           >
-            <motion.div
-              className="bg-white rounded-xl p-8 shadow-xl text-center max-w-md mx-4"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0 }}
-              transition={{ duration: 0.4, type: "spring" }}
+            <div className="relative w-20 h-20 mx-auto mb-6">
+              <div className="absolute inset-0 rounded-full border-4 border-[#98A869]" />
+              <svg
+                className="absolute inset-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#98A869"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <motion.path
+                  d="M20 6L9 17L4 12"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                />
+              </svg>
+            </div>
+
+            <h2 className="text-3xl font-bold text-[#98A869] mb-4">
+              Message Sent Successfully!
+            </h2>
+
+            <p className="text-gray-600 mb-6">
+              Thank you for contacting us. We'll get back to you soon.
+            </p>
+
+            <button
+              className="bg-[#98A869] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors"
+              onClick={handleCloseSuccess}
             >
-              <CheckCircle className="h-16 w-16 text-[#98A869] mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-[#98A869]">Message Sent Successfully!</h2>
-              <p className="text-gray-600 mt-2">
-                Thank you for contacting us. We'll get back to you soon.
-              </p>
-            </motion.div>
+              Close
+            </button>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
       {/* Hero Section */}
       <motion.div
