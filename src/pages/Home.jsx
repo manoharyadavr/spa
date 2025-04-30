@@ -41,7 +41,7 @@ const services = [
     title: "Japanese Head Spa",
     description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Deep scalp cleansing",
       "Head massage",
@@ -49,13 +49,13 @@ const services = [
     ],
     image: "/images/japaneseHeadSpa.jpg",
     icon: Crown,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Warm Stone Massage",
     description: "Smooth, heated basalt stones glide over muscles to melt away tension and boost circulation.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Heated Stones",
       "Deep Muscle Relief",
@@ -63,13 +63,13 @@ const services = [
     ],
     image: "/images/warmStoneMassage.jpg",
     icon: Gem,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Aromatherapy",
     description: "A bespoke blend of pure essential oils is gently massaged into your skin.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Custom Oil Blend",
       "Gentle Massage",
@@ -77,13 +77,13 @@ const services = [
     ],
     image: "/images/aromatherapy.jpg",
     icon: Leaf,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Body Polishing",
     description: "Experience our signature 6-step Body Polishing Ritual.",
     price: "₹8,999",
-    duration: "1.5 hours",
+    duration: "90 minutes",
     features: [
       "Full Body Treatment",
       "Skin Rejuvenation",
@@ -91,7 +91,7 @@ const services = [
     ],
     image: "/images/bodyPolishing.jpg",
     icon: Gem,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Foot Reflexology",
@@ -105,13 +105,13 @@ const services = [
     ],
     image: "/images/footReflexology.jpg",
     icon: Footprints,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "OxyGlow Facial",
     description: "A 9-step facial treatment for radiant, glowing skin.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Deep Cleansing",
       "Oxygen Therapy",
@@ -119,13 +119,13 @@ const services = [
     ],
     image: "/images/oxyglowFacial.jpg",
     icon: Smile,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "O3+ Facial",
     description: "A professional-grade facial using active oxygen and high-performance ingredients.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Active Oxygen",
       "Premium Products",
@@ -133,13 +133,13 @@ const services = [
     ],
     image: "images/o3+facial.jpg",
     icon: Star,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Bridal Facial",
     description: "A luxurious skin prep ritual designed to give every bride a radiant, photo-ready glow.",
     price: "₹6,900",
-    duration: "1.25 hours",
+    duration: "75 minutes",
     features: [
       "Bridal Glow",
       "Photo-Ready Skin",
@@ -147,7 +147,7 @@ const services = [
     ],
     image: "/images/bridalFacial.jpg",
     icon: Crown,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Shirodhara Therapy",
@@ -161,7 +161,7 @@ const services = [
     ],
     image: "/images/shirodharaTherapy.jpg",
     icon: Flower2,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   // {
   //   title: "Sound Therapy",
@@ -175,7 +175,7 @@ const services = [
   //   ],
   //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
   //   icon: Music,
-  //   whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   // },
   // {
   //   title: "Sound Therapy",
@@ -189,13 +189,13 @@ const services = [
   //   ],
   //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
   //   icon: Music,
-  //   whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   // },
   {
     title: "N Wellness Signature Body Treatment",
     description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
     price: "₹16,000",
-    duration: "3 hours",
+    duration: "180 minutes",
     features: [
       "Full Body Treatment",
       "Premium Experience",
@@ -203,7 +203,7 @@ const services = [
     ],
     image: "/images/nwellnessSignature.png",
     icon: Award,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   }
 ];
 
@@ -319,7 +319,7 @@ const Home = () => {
       </Swiper>
       {/* About Section */}
        <motion.div 
-         className="container mx-auto px-4 sm:px-6 py-12 sm:py-20 bg-white"
+         className="w-full px-4 sm:px-6 py-12 sm:py-20 bg-white"
          initial="hidden"
          whileInView="visible"
          viewport={{ once: true, amount: 0.2 }}
@@ -333,7 +333,7 @@ const Home = () => {
          >
            About Our N Wellness Studio
          </motion.h2>
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
+         <div className="max-w-4xl mx-auto">
            <motion.div
              initial={{ opacity: 0, x: -20 }}
              whileInView={{ opacity: 1, x: 0 }}
@@ -341,7 +341,7 @@ const Home = () => {
              transition={{ duration: 0.6 }}
            >
             <p className="text-[#98A869]/90 text-lg leading-relaxed">
-                Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad’s finest women’s wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
+                Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad's finest women's wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
               </p>
               <p className="text-[#98A869]/80 text-lg leading-relaxed">Led by a passionate expert, every session is crafted with love, skill, and true attention to your wellbeing. Here, self-care becomes an art — and every visit, a journey back to yourself. Experience relaxation, transformation, and pure magic. Only at N Wellness.
               </p>
@@ -361,7 +361,7 @@ const Home = () => {
                ))}
              </div> */}
            </motion.div>
-           <motion.div 
+           {/* <motion.div 
              className="relative group mt-8 md:mt-0"
              initial={{ opacity: 0, x: 20 }}
              whileInView={{ opacity: 1, x: 0 }}
@@ -374,7 +374,7 @@ const Home = () => {
                alt="Wellness Center Interior"
                className="relative w-full h-full object-cover rounded-3xl shadow-xl transform group-hover:scale-[1.02] transition duration-700"
              />
-           </motion.div>
+           </motion.div> */}
          </div>
        </motion.div>
 

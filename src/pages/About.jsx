@@ -87,14 +87,14 @@ const About = () => {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             
             {/* Left - Image */}
-            <div className="relative group">
+            {/* <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#98A869] to-[#FEDEB8] rounded-3xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
               <img 
                 src="/images/aboutUs.jpeg" 
                 alt="Spa Treatment Room" 
                 className="relative w-full h-full object-cover rounded-3xl shadow-lg transform group-hover:scale-[1.02] transition duration-700"
               />
-            </div>
+            </div> */}
 
             {/* Right - Text */}
             <div className="space-y-6 text-justify sm:text-left">

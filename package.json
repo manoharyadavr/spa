@@ -1,7 +1,7 @@
 {
   "name": "frontend",
-  "homepage": "https://nwellness.onrender.com/",
   "version": "0.1.0",
+  "homepage": "https://nwellness.onrender.com",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",

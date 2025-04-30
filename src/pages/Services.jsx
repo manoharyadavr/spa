@@ -52,7 +52,7 @@ const services = [
     title: "Japanese Head Spa",
     description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Deep scalp cleansing",
       "Head massage",
@@ -60,13 +60,13 @@ const services = [
     ],
     image: "/images/japaneseHeadSpa.jpg",
     icon: Crown,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Warm Stone Massage",
     description: "Smooth, heated basalt stones glide over muscles to melt away tension and boost circulation.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Heated Stones",
       "Deep Muscle Relief",
@@ -74,13 +74,13 @@ const services = [
     ],
     image: "/images/warmStoneMassage.jpg",
     icon: Gem,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Aromatherapy",
     description: "A bespoke blend of pure essential oils is gently massaged into your skin.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Custom Oil Blend",
       "Gentle Massage",
@@ -88,13 +88,13 @@ const services = [
     ],
     image: "/images/aromatherapy.jpg",
     icon: Leaf,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Body Polishing",
     description: "Experience our signature 6-step Body Polishing Ritual.",
     price: "₹8,999",
-    duration: "1.5 hours",
+    duration: "90 minutes",
     features: [
       "Full Body Treatment",
       "Skin Rejuvenation",
@@ -102,7 +102,7 @@ const services = [
     ],
     image: "/images/bodyPolishing.jpg",
     icon: Gem,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Foot Reflexology",
@@ -116,13 +116,13 @@ const services = [
     ],
     image: "/images/footReflexology.jpg",
     icon: Footprints,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "OxyGlow Facial",
     description: "A 9-step facial treatment for radiant, glowing skin.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Deep Cleansing",
       "Oxygen Therapy",
@@ -130,13 +130,13 @@ const services = [
     ],
     image: "/images/oxyglowFacial.jpg",
     icon: Smile,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "O3+ Facial",
     description: "A professional-grade facial using active oxygen and high-performance ingredients.",
     price: "₹6,500",
-    duration: "1 hour",
+    duration: "60 minutes",
     features: [
       "Active Oxygen",
       "Premium Products",
@@ -144,13 +144,13 @@ const services = [
     ],
     image: "images/o3+facial.jpg",
     icon: Star,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Bridal Facial",
     description: "A luxurious skin prep ritual designed to give every bride a radiant, photo-ready glow.",
     price: "₹6,900",
-    duration: "1.25 hours",
+    duration: "75 minutes",
     features: [
       "Bridal Glow",
       "Photo-Ready Skin",
@@ -158,7 +158,7 @@ const services = [
     ],
     image: "/images/bridalFacial.jpg",
     icon: Crown,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Shirodhara Therapy",
@@ -172,7 +172,7 @@ const services = [
     ],
     image: "/images/shirodharaTherapy.jpg",
     icon: Flower2,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   // {
   //   title: "Sound Therapy",
@@ -186,13 +186,27 @@ const services = [
   //   ],
   //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
   //   icon: Music,
-  //   whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+  // },
+  // {
+  //   title: "Sound Therapy",
+  //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
+  //   price: "₹2,000",
+  //   duration: "15 minutes",
+  //   features: [
+  //     "Healing Vibrations",
+  //     "Deep Relaxation",
+  //     "Energy Balance"
+  //   ],
+  //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
+  //   icon: Music,
+  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   // },
   {
     title: "N Wellness Signature Body Treatment",
     description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
     price: "₹16,000",
-    duration: "3 hours",
+    duration: "180 minutes",
     features: [
       "Full Body Treatment",
       "Premium Experience",
@@ -200,7 +214,7 @@ const services = [
     ],
     image: "/images/nwellnessSignature.png",
     icon: Award,
-    whatsapp: "https://wa.me/916301846681?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
+    whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   }
 ];
 
