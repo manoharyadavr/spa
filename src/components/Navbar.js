@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ShoppingCart } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { cartItems } = useCart();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -35,11 +38,22 @@ const Navbar = () => {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FEDEB8] transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               ))}
-              <Link
+              {/* <Link
                 to="/services"
                 className="ml-4 px-6 py-2 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-colors duration-200 shadow-sm hover:shadow-md"
               >
                 Get Started
+              </Link> */}
+              <Link
+                to="/cart"
+                className="relative p-2 text-[#98A869] hover:text-[#98A869]/80 transition-colors duration-200"
+              >
+                <ShoppingCart className="w-6 h-6" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#98A869] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                    {cartItems.length}
+                  </span>
+                )}
               </Link>
             </div>
 
@@ -98,6 +112,21 @@ const Navbar = () => {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  to="/cart"
+                  className="flex items-center py-2 text-[#98A869] font-medium hover:text-[#98A869]/80 transition-colors duration-200"
+                  onClick={toggleMobileMenu}
+                >
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Cart
+                  {cartItems.length > 0 && (
+                    <span className="ml-2 bg-[#98A869] text-white text-xs px-2 py-1 rounded-full">
+                      {cartItems.length}
+                    </span>
+                  )}
+                </Link>
+              </li>
             </ul>
             <div className="mt-8">
               <Link

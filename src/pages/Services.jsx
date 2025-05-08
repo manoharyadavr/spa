@@ -13,8 +13,10 @@ import {
   Music, 
   Award,
   Leaf,
-  Flower2
+  Flower2,
+  ShoppingCart
 } from "lucide-react";
+import { useCart } from '../context/CartContext';
 
 // Animation Variants
 const fadeInUp = {
@@ -220,6 +222,7 @@ const services = [
 
 const Services = () => {
   const [isMounted, setIsMounted] = React.useState(false);
+  const { addToCart, cartItems } = useCart();
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -297,14 +300,15 @@ const Services = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
+            const isInCart = cartItems.some(item => item.title === service.title);
             return (
-            <motion.div
-              key={index}
+              <motion.div
+                key={index}
                 className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
                 variants={fadeInUp}
-              initial="hidden"
+                initial="hidden"
                 animate={isMounted ? "visible" : "hidden"}
-              custom={index}
+                custom={index}
                 whileHover={{ 
                   scale: 1.02,
                   transition: { duration: 0.15 }
@@ -316,9 +320,9 @@ const Services = () => {
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.2 }}
                 >
-              <motion.img 
-                src={service.image} 
-                alt={service.title} 
+                  <motion.img 
+                    src={service.image} 
+                    alt={service.title} 
                     className="w-full h-full object-cover"
                     initial={{ scale: 1.1 }}
                     animate={{ scale: 1 }}
@@ -372,8 +376,8 @@ const Services = () => {
                     <div className="flex items-center text-gray-600">
                       <Clock className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                       <span className="text-sm sm:text-base">{service.duration}</span>
-              </div>
-            </motion.div>
+                    </div>
+                  </motion.div>
 
                   <motion.ul 
                     className="space-y-2 mb-6 flex-grow"
@@ -395,19 +399,34 @@ const Services = () => {
                     ))}
                   </motion.ul>
 
-                  <motion.a
-                    href={service.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                    transition={{ delay: 0.5, duration: 0.3 }}
-                  >
-                    Book Now
-                  </motion.a>
+                  {isInCart ? (
+                    <Link to="/cart">
+                      <motion.button
+                        className="block w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto flex items-center justify-center"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                        transition={{ delay: 0.5, duration: 0.3 }}
+                      >
+                        <ShoppingCart className="w-5 h-5 mr-2" />
+                        Go to Cart
+                      </motion.button>
+                    </Link>
+                  ) : (
+                    <motion.button
+                      onClick={() => addToCart(service)}
+                      className="block w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto flex items-center justify-center"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                      transition={{ delay: 0.5, duration: 0.3 }}
+                    >
+                      <ShoppingCart className="w-5 h-5 mr-2" />
+                      Add to Cart
+                    </motion.button>
+                  )}
                 </motion.div>
               </motion.div>
             );

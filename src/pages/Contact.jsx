@@ -1,150 +1,79 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { CheckCircle, MapPin, Phone, Mail, Clock } from "lucide-react";
-import { sendContactEmail } from '../services/emailService';
-
-// Animation Variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
-};
-
-const successAnimation = {
-  initial: { scale: 0, opacity: 0 },
-  animate: { 
-    scale: 1, 
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 260,
-      damping: 20
-    }
-  },
-  exit: { 
-    scale: 0, 
-    opacity: 0,
-    transition: {
-      duration: 0.3
-    }
-  }
-};
-
-const checkmarkAnimation = {
-  initial: { pathLength: 0, opacity: 0 },
-  animate: { 
-    pathLength: 1, 
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      delay: 0.2
-    }
-  }
-};
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    contactNumber: "",
-    message: "",
-    subject: "",
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
   });
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
     setError(null);
 
     try {
-      await sendContactEmail({
-        name: formData.name,
-        email: formData.email,
-        contactNumber: formData.contactNumber,
-        subject: formData.subject,
-        message: formData.message
+      const response = await fetch('http://localhost:5000/api/email/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          contactNumber: formData.phone,
+          message: formData.message
+        }),
       });
 
-      setShowSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        contactNumber: '',
-        subject: '',
-        message: ''
-      });
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitSuccess(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+      } else {
+        throw new Error(data.error || 'Failed to send message');
+      }
     } catch (error) {
+      console.error('Error sending message:', error);
       setError(error.message || 'Failed to send message. Please try again.');
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
-  const handleCloseSuccess = () => {
-    setShowSuccess(false);
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   return (
     <div className="bg-[#FEDEB8]/5 min-h-screen">
-      {/* Success Modal */}
-      {showSuccess && (
-        <div className="fixed inset-0 bg-[#98A869]/90 backdrop-blur-sm flex items-center justify-center z-50">
-          <motion.div
-            className="bg-white rounded-2xl p-8 shadow-2xl text-center max-w-md mx-4 relative overflow-hidden"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          >
-            <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 rounded-full border-4 border-[#98A869]" />
-              <svg
-                className="absolute inset-0"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#98A869"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <motion.path
-                  d="M20 6L9 17L4 12"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                />
-              </svg>
-            </div>
-
-            <h2 className="text-3xl font-bold text-[#98A869] mb-4">
-              Message Sent Successfully!
-            </h2>
-
-            <p className="text-gray-600 mb-6">
-              Thank you for contacting us. We'll get back to you soon.
-            </p>
-
-            <button
-              className="bg-[#98A869] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors"
-              onClick={handleCloseSuccess}
-            >
-              Close
-            </button>
-          </motion.div>
-        </div>
-      )}
-
       {/* Hero Section */}
       <motion.div
         className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-center text-center"
@@ -187,7 +116,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div
-            className="space-y-8 container "
+            className="space-y-8"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
@@ -246,103 +175,122 @@ const Contact = () => {
 
           {/* Contact Form */}
           <motion.div
-            className="bg-white rounded-2xl shadow-lg p-8 container"
+            className="bg-white rounded-2xl shadow-lg p-8"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-gray-700 mb-2">
-                  Name <span className="text-[#98A869]">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter your name"
-                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
-                />
-              </div>
+            {!submitSuccess ? (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-gray-700 mb-2">
+                    Name <span className="text-[#98A869]">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter your name"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-gray-700 mb-2">
-                  Email <span className="text-[#98A869]">*</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter your email"
-                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
-                />
-              </div>
+                <div>
+                  <label className="block text-gray-700 mb-2">
+                    Email <span className="text-[#98A869]">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter your email"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-gray-700 mb-2">
-                  Phone Number <span className="text-[#98A869]">*</span>
-                </label>
-                <input
-                  type="tel"
-                  name="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={handleChange}
-                  required
-                  pattern="[0-9]{10}"
-                  title="Please enter a valid 10-digit phone number"
-                  placeholder="Enter your phone number"
-                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
-                />
-              </div>
+                <div>
+                  <label className="block text-gray-700 mb-2">
+                    Phone Number <span className="text-[#98A869]">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    pattern="[0-9]{10}"
+                    title="Please enter a valid 10-digit phone number"
+                    placeholder="Enter your phone number"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-gray-700 mb-2">
-                  Subject <span className="text-[#98A869]">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter the subject"
-                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
-                />
-              </div>
+                <div>
+                  <label className="block text-gray-700 mb-2">
+                    Message <span className="text-[#98A869]">*</span>
+                  </label>
+                  <textarea
+                    name="message"
+                    rows="4"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    placeholder="Write your message"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-gray-700 mb-2">
-                  Message <span className="text-[#98A869]">*</span>
-                </label>
-                <textarea
-                  name="message"
-                  rows="4"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  placeholder="Write your message"
-                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869]"
-                />
-              </div>
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
+                    {error}
+                  </div>
+                )}
 
-              <motion.button
-                type="submit"
-                className="w-full bg-[#98A869] text-white py-3 font-semibold rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={loading}
+                <motion.button
+                  type="submit"
+                  className="w-full bg-[#98A869] text-white py-3 font-semibold rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </motion.button>
+              </form>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-8"
               >
-                {loading ? 'Sending...' : 'Send Message'}
-              </motion.button>
-            </form>
-
-            {error && (
-              <p className="text-red-500 mt-4 text-center">{error}</p>
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg
+                    className="w-8 h-8 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
+                <p className="text-gray-600">Thank you for contacting us. We'll get back to you soon.</p>
+                <button
+                  onClick={() => setSubmitSuccess(false)}
+                  className="mt-4 text-[#98A869] hover:text-[#98A869]/80 transition-colors duration-200"
+                >
+                  Send another message
+                </button>
+              </motion.div>
             )}
           </motion.div>
         </div>

@@ -6,7 +6,8 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award, Flower2 } from "lucide-react";
+import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award, Flower2, ShoppingCart } from "lucide-react";
+import { useCart } from '../context/CartContext';
 
 // Animation Variants
 const fadeIn = {
@@ -236,6 +237,7 @@ const services = [
 
 const Home = () => {
   const testimonialRef = useRef(null);
+  const { addToCart, cartItems } = useCart();
 
   const scrollLeft = () => {
     if (testimonialRef.current) {
@@ -390,6 +392,7 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
+            const isInCart = cartItems.some(item => item.title === service.title);
             return (
               <motion.div
                 key={index}
@@ -426,14 +429,24 @@ const Home = () => {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={service.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm"
-                >
-                  Book Now
-                </a>
+                {isInCart ? (
+                  <Link to="/cart">
+                    <button
+                      className="block w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm flex items-center justify-center"
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      Go to Cart
+                    </button>
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => addToCart(service)}
+                    className="block w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm flex items-center justify-center"
+                  >
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Add to Cart
+                  </button>
+                )}
               </motion.div>
             );
           })}
