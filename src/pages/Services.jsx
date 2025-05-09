@@ -95,7 +95,7 @@ const services = [
   {
     title: "Body Polishing",
     description: "Experience our signature 6-step Body Polishing Ritual.",
-    price: "₹8,999",
+    price: "₹9,800",
     duration: "90 minutes",
     features: [
       "Full Body Treatment",
