@@ -75,7 +75,7 @@ const Cart = () => {
       setError(null);
 
       // Create order
-      const { data: order } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/create-order', {
+      const { data: order } = await axios.post('https://spabackend-1.onrender.com/api/payment/create-order', {
         amount: getTotalDeposit(),
         customerDetails
       });
@@ -91,7 +91,7 @@ const Cart = () => {
         handler: async function (response) {
           try {
             // Verify payment
-            const { data } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/verify-payment', {
+            const { data } = await axios.post('https://spabackend-1.onrender.com/api/payment/verify-payment', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
