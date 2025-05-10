@@ -6,7 +6,7 @@ import { Clock, Trash2, Calendar } from 'lucide-react';
 import axios from 'axios';
 
 const Cart = () => {
-  const { cartItems, removeFromCart, getTotalDeposit, clearCart } = useCart();
+  const { cartItems, addToCart, removeFromCart, decrementQuantity, getTotalDeposit, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [showCustomerForm, setShowCustomerForm] = useState(false);
@@ -101,7 +101,9 @@ const Cart = () => {
 
             if (data.verified && data.clearCart) {
               clearCart();
-              window.location.href = '/payment-success';
+              setTimeout(() => {
+                window.location.href = '/payment-success';
+              }, 100);
             }
           } catch (error) {
             console.error('Payment verification failed:', error);
@@ -121,19 +123,15 @@ const Cart = () => {
             setIsProcessing(false);
           }
         },
+        method: {
+          upi: true,
+          card: true,
+          netbanking: true,
+          wallet: true,
+          paylater: true
+        },
         config: {
           display: {
-            blocks: {
-              banks: {
-                name: "Pay using UPI",
-                instruments: [
-                  {
-                    method: "upi"
-                  }
-                ]
-              }
-            },
-            sequence: ["block.banks"],
             preferences: {
               show_default_blocks: true
             }
@@ -210,19 +208,59 @@ const Cart = () => {
                       <Clock className="w-4 h-4 mr-1" />
                       <span>{item.duration}</span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="text-[#98A869] font-semibold">Total: {item.price}</p>
-                        <p className="text-sm text-gray-500">Deposit (20%): {item.deposit}</p>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => decrementQuantity(item.title)}
+                          className="w-8 h-8 rounded-full border border-gray-300 text-[#98A869] text-lg font-bold flex items-center justify-center hover:bg-[#FEDEB8]/40 transition-colors duration-200"
+                          aria-label="Decrease quantity"
+                        >
+                          −
+                        </button>
+                        <span className="px-3 py-1 bg-gray-100 rounded text-base font-medium min-w-[32px] text-center">
+                          {item.quantity || 1}
+                        </span>
+                        <button
+                          onClick={() => addToCart({
+                            title: item.title,
+                            price: item.price,
+                            description: item.description,
+                            duration: item.duration,
+                            image: item.image,
+                            icon: item.icon,
+                            whatsapp: item.whatsapp
+                          })}
+                          className="w-8 h-8 rounded-full border border-gray-300 text-[#98A869] text-lg font-bold flex items-center justify-center hover:bg-[#FEDEB8]/40 transition-colors duration-200"
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
                       </div>
-                      <button
-                        onClick={() => removeFromCart(item.title)}
-                        className="text-red-500 hover:text-red-600 transition-colors duration-200"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
+                      <div className="flex flex-col sm:items-end">
+                        <p className="text-[#98A869] font-semibold">Total: ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString()}</p>
+                        <p className="text-sm text-gray-500">Deposit (20%): ₹{(parseFloat(item.deposit.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString()}</p>
+                        {/* Premium Membership Price */}
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
+                          {/* Premium Membership */}
+                          <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1" />
+                          </span>
+                          <span className="text-base font-bold text-[#98A869]">
+                            ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6 * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                          </span>
+                          <span className="text-xs text-gray-400 line-through ml-1">₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                          <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <button
+                    onClick={() => removeFromCart(item.title)}
+                    className="text-red-500 hover:text-red-600 transition-colors duration-200 ml-2"
+                    aria-label="Remove item"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
                 </motion.div>
               ))}
             </div>

@@ -23,18 +23,39 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addToCart = (service) => {
-    // Check if service is already in cart
-    const isInCart = cartItems.some(item => item.title === service.title);
-    
-    if (!isInCart) {
-      // Calculate deposit (20% of price)
-      const deposit = calculateDeposit(service.price);
-      
-      setCartItems(prevItems => [...prevItems, {
-        ...service,
-        deposit: `₹${deposit}`
-      }]);
-    }
+    setCartItems(prevItems => {
+      const existing = prevItems.find(item => item.title === service.title);
+      if (existing) {
+        return prevItems.map(item =>
+          item.title === service.title
+            ? { ...item, quantity: (item.quantity || 1) + 1 }
+            : item
+        );
+      } else {
+        const deposit = calculateDeposit(service.price);
+        return [
+          ...prevItems,
+          {
+            ...service,
+            deposit: `₹${deposit}`,
+            quantity: 1
+          }
+        ];
+      }
+    });
+  };
+
+  const decrementQuantity = (serviceTitle) => {
+    setCartItems(prevItems => {
+      const item = prevItems.find(item => item.title === serviceTitle);
+      return prevItems
+        .map(item =>
+          item.title === serviceTitle
+            ? { ...item, quantity: (item.quantity || 1) - 1 }
+            : item
+        )
+        .filter(item => item.quantity > 0);
+    });
   };
 
   const removeFromCart = (serviceTitle) => {
@@ -50,7 +71,7 @@ export const CartProvider = ({ children }) => {
   const getTotalDeposit = () => {
     return cartItems.reduce((total, item) => {
       const deposit = parseFloat(item.deposit.replace('₹', '').replace(/,/g, ''));
-      return total + deposit;
+      return total + deposit * (item.quantity || 1);
     }, 0);
   };
 
@@ -64,6 +85,7 @@ export const CartProvider = ({ children }) => {
       cartItems,
       addToCart,
       removeFromCart,
+      decrementQuantity,
       getTotalDeposit,
       clearCart
     }}>

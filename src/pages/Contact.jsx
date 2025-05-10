@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    contactNumber: '',
     message: ''
   });
 
@@ -27,37 +28,23 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-
+    setSubmitSuccess(false);
     try {
       const response = await fetch('http://localhost:5000/api/email/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          contactNumber: formData.phone,
-          message: formData.message
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitSuccess(true);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          message: ''
-        });
-      } else {
-        throw new Error(data.error || 'Failed to send message');
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Failed to send message');
       }
-    } catch (error) {
-      console.error('Error sending message:', error);
-      setError(error.message || 'Failed to send message. Please try again.');
+      setSubmitSuccess(true);
+      setFormData({ name: '', email: '', contactNumber: '', message: '' });
+      toast.success('Message sent successfully!');
+    } catch (err) {
+      setError(err.message);
+      toast.error('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -219,8 +206,8 @@ const Contact = () => {
                   </label>
                   <input
                     type="tel"
-                    name="phone"
-                    value={formData.phone}
+                    name="contactNumber"
+                    value={formData.contactNumber}
                     onChange={handleChange}
                     required
                     pattern="[0-9]{10}"

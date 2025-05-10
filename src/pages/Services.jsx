@@ -1,22 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { 
-  Spa, 
-  Clock, 
-  CheckCircle, 
-  Crown, 
-  Gem, 
-  Footprints, 
-  Smile, 
-  Star, 
-  Music, 
+import {
+  Clock,
+  CheckCircle,
+  Crown,
+  Gem,
+  Footprints,
+  Smile,
+  Star,
   Award,
   Leaf,
   Flower2,
   ShoppingCart
 } from "lucide-react";
 import { useCart } from '../context/CartContext';
+import { toast } from 'react-hot-toast';
 
 // Animation Variants
 const fadeInUp = {
@@ -95,7 +94,7 @@ const services = [
   {
     title: "Body Polishing",
     description: "Experience our signature 6-step Body Polishing Ritual.",
-    price: "₹8,999",
+    price: "₹9,800",
     duration: "90 minutes",
     features: [
       "Full Body Treatment",
@@ -304,7 +303,7 @@ const Services = () => {
             return (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+                className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isMounted ? "visible" : "hidden"}
@@ -358,7 +357,7 @@ const Services = () => {
                     {service.title}
                   </motion.h3>
                   <motion.p 
-                    className="text-sm sm:text-base text-gray-600 mb-4 line-clamp-2"
+                    className="text-sm sm:text-base text-gray-600 mb-4"
                     initial={{ opacity: 0 }}
                     animate={isMounted ? { opacity: 1 } : { opacity: 0 }}
                     transition={{ delay: 0.25, duration: 0.3 }}
@@ -367,7 +366,7 @@ const Services = () => {
                   </motion.p>
                   
                   <motion.div 
-                    className="flex items-center justify-between mb-4"
+                    className="flex items-center justify-between mb-1"
                     initial={{ opacity: 0, y: 10 }}
                     animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                     transition={{ delay: 0.3, duration: 0.3 }}
@@ -377,6 +376,23 @@ const Services = () => {
                       <Clock className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                       <span className="text-sm sm:text-base">{service.duration}</span>
                     </div>
+                  </motion.div>
+                  {/* Premium Membership Price */}
+                  <motion.div
+                    className="mb-4 flex items-center gap-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                    transition={{ delay: 0.32, duration: 0.3 }}
+                  >
+                    <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
+                      {/* Premium Membership */}
+                      <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1 opacity-80" />
+                    </span>
+                    <span className="text-lg sm:text-xl font-bold text-[#98A869]">
+                      ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </span>
+                    <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
+                    <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
                   </motion.div>
 
                   <motion.ul 
@@ -400,22 +416,56 @@ const Services = () => {
                   </motion.ul>
 
                   {isInCart ? (
-                    <Link to="/cart">
-                      <motion.button
-                        className="block w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto flex items-center justify-center"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                        transition={{ delay: 0.5, duration: 0.3 }}
-                      >
-                        <ShoppingCart className="w-5 h-5 mr-2" />
-                        Go to Cart
-                      </motion.button>
-                    </Link>
+                    <div className="flex flex-row gap-2 items-end">
+                      <Link to="/cart" className="flex-1">
+                        <motion.button
+                          style={{ minWidth: 0, width: '100%' }}
+                          className="w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto flex items-center justify-center"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                          transition={{ delay: 0.5, duration: 0.3 }}
+                        >
+                          <ShoppingCart className="w-5 h-5 mr-2" />
+                          Go to Cart
+                        </motion.button>
+                      </Link>
+                      <div className="flex flex-col items-end ml-1">
+                        <motion.button
+                          onClick={() => {
+                            toast.dismiss();
+                            addToCart(service);
+                            toast.success('Service added to cart!');
+                          }}
+                          className="relative bg-white border-2 border-[#98A869] text-[#98A869] text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/10 transition-colors duration-200 text-sm sm:text-base flex items-center justify-center min-w-[48px] px-3"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                          transition={{ delay: 0.5, duration: 0.3 }}
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                          </svg>
+                          {(() => {
+                            const cartItem = cartItems.find(item => item.title === service.title);
+                            return cartItem && cartItem.quantity > 0 ? (
+                              <span className="absolute -top-1 -right-1 bg-[#98A869] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                                {cartItem.quantity}
+                              </span>
+                            ) : null;
+                          })()}
+                        </motion.button>
+                      </div>
+                    </div>
                   ) : (
                     <motion.button
-                      onClick={() => addToCart(service)}
+                      onClick={() => {
+                        toast.dismiss();
+                        addToCart(service);
+                        toast.success('Service added to cart!');
+                      }}
                       className="block w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto flex items-center justify-center"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}

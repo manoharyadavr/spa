@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award, Flower2, ShoppingCart } from "lucide-react";
 import { useCart } from '../context/CartContext';
+import { toast } from 'react-hot-toast';
 
 // Animation Variants
 const fadeIn = {
@@ -34,6 +35,18 @@ const carouselSlides = [
     image: "/images/image3.png",
     title: "Luxury Spa Treatments",
     subtitle: "Indulge in our signature therapies",
+  },
+  {
+    image: "/images/image4.png",
+    title: "N Wellness Membership",
+    subtitle: "Invest in yourself. Receive more in return. Join the Nwellness Membership and unlock ₹70,000 worth of services for just ₹50,000.",
+    details: [
+      "Pay ₹50,000",
+      "Get ₹70,000 in spa & wellness services",
+      "₹20,000 extra value — completely free",
+      "Valid on all services"
+    ],
+    cta: "Limited memberships available. To join, call us or send a message on WhatsApp."
   },
 ];
 
@@ -83,7 +96,7 @@ const services = [
   {
     title: "Body Polishing",
     description: "Experience our signature 6-step Body Polishing Ritual.",
-    price: "₹8,999",
+    price: "₹9,800",
     duration: "90 minutes",
     features: [
       "Full Body Treatment",
@@ -259,10 +272,11 @@ const Home = () => {
         spaceBetween={0}
         slidesPerView={1}
         autoplay={{ 
-          delay: 5000,
+          delay: 1000, // 5 seconds per slide
           disableOnInteraction: false,
           pauseOnMouseEnter: true 
         }}
+        loop={true}
         pagination={{ 
           clickable: true,
           dynamicBullets: true,
@@ -303,16 +317,41 @@ const Home = () => {
                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                   >
                     {slide.subtitle}
+                    {slide.details && (
+                      <ul className="mt-4 space-y-2">
+                        {slide.details.map((detail, i) => (
+                          <li key={i} className="flex items-center">
+                            <CheckCircle className="w-4 h-4 mr-2" />
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {slide.cta && (
+                      <p className="mt-4 text-sm italic">{slide.cta}</p>
+                    )}
                   </motion.p>
-                  <Link to="/services">
-                    <motion.button
-                      className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-xs sm:text-sm"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Explore Our Services
-                    </motion.button>
-                  </Link>
+                  {index === carouselSlides.length - 1 ? (
+                    <a href="https://wa.me/919391803316?text=Hi,%20I%20am%20interested%20in%20the%20N%20Wellness%20Membership.%20Could%20you%20please%20provide%20more%20information%20about%20the%20benefits%20and%20how%20to%20join?" target="_blank" rel="noopener noreferrer">
+                      <motion.button
+                        className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-xs sm:text-sm"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Book Now
+                      </motion.button>
+                    </a>
+                  ) : (
+                    <Link to="/services">
+                      <motion.button
+                        className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-xs sm:text-sm"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Explore Our Services
+                      </motion.button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -389,14 +428,14 @@ const Home = () => {
         variants={fadeIn}
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Our Signature Services</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isInCart = cartItems.some(item => item.title === service.title);
             return (
               <motion.div
                 key={index}
-                className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="relative bg-white p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
@@ -413,13 +452,25 @@ const Home = () => {
                   </div>
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 line-clamp-2">{service.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-4 line-clamp-2">{service.description}</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">{service.description}</p>
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-[#98A869] font-semibold text-sm sm:text-base">{service.price}</span>
                   <span className="text-gray-500 flex items-center text-xs sm:text-sm">
                     <Clock size={14} className="mr-1" />
                     {service.duration}
                   </span>
+                </div>
+                {/* Premium Membership Price */}
+                <div className="mb-4 flex items-center gap-2">
+                  <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
+                    {/* Premium Membership */}
+                    <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1 opacity-80" />
+                  </span>
+                  <span className="text-base sm:text-lg font-bold text-[#98A869]">
+                    ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                  </span>
+                  <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
+                  <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
                 </div>
                 <ul className="space-y-1 sm:space-y-2 mb-4">
                   {service.features.map((feature, idx) => (
@@ -430,17 +481,46 @@ const Home = () => {
                   ))}
                 </ul>
                 {isInCart ? (
-                  <Link to="/cart">
-                    <button
-                      className="block w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm flex items-center justify-center"
-                    >
-                      <ShoppingCart className="w-4 h-4 mr-2" />
-                      Go to Cart
-                    </button>
-                  </Link>
+                  <div className="flex flex-row gap-2 items-end">
+                    <Link to="/cart" className="flex-1">
+                      <button
+                        style={{ minWidth: 0, width: '100%' }}
+                        className="w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm flex items-center justify-center"
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Go to Cart
+                      </button>
+                    </Link>
+                    <div className="flex flex-col items-end ml-1">
+                      <button
+                        onClick={() => {
+                          toast.dismiss();
+                          addToCart(service);
+                          toast.success('Service added to cart!');
+                        }}
+                        className="relative bg-white border-2 border-[#98A869] text-[#98A869] text-center py-2 sm:py-2.5 rounded-lg font-semibold hover:bg-[#98A869]/10 transition-colors duration-200 text-sm flex items-center justify-center min-w-[48px] px-3"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        {(() => {
+                          const cartItem = cartItems.find(item => item.title === service.title);
+                          return cartItem && cartItem.quantity > 0 ? (
+                            <span className="absolute -top-1 -right-1 bg-[#98A869] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                              {cartItem.quantity}
+                            </span>
+                          ) : null;
+                        })()}
+                      </button>
+                    </div>
+                  </div>
                 ) : (
                   <button
-                    onClick={() => addToCart(service)}
+                    onClick={() => {
+                      toast.dismiss();
+                      addToCart(service);
+                      toast.success('Service added to cart!');
+                    }}
                     className="block w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm flex items-center justify-center"
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />

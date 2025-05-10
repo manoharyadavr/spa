@@ -6,6 +6,7 @@ import { useCart } from "../context/CartContext";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cartItems } = useCart();
+  const cartCount = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -49,9 +50,9 @@ const Navbar = () => {
                 className="relative p-2 text-[#98A869] hover:text-[#98A869]/80 transition-colors duration-200"
               >
                 <ShoppingCart className="w-6 h-6" />
-                {cartItems.length > 0 && (
+                {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-[#98A869] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                    {cartItems.length}
+                    {cartCount}
                   </span>
                 )}
               </Link>
@@ -120,9 +121,9 @@ const Navbar = () => {
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   Cart
-                  {cartItems.length > 0 && (
+                  {cartCount > 0 && (
                     <span className="ml-2 bg-[#98A869] text-white text-xs px-2 py-1 rounded-full">
-                      {cartItems.length}
+                      {cartCount}
                     </span>
                   )}
                 </Link>
