@@ -31,11 +31,11 @@ const carouselSlides = [
     title: "Holistic Wellness Journey",
     subtitle: "Transform your mind, body, and soul",
   },
-  {
-    image: "/images/image3.png",
-    title: "Luxury Spa Treatments",
-    subtitle: "Indulge in our signature therapies",
-  },
+  // {
+  //   image: "/images/image3.png",
+  //   title: "Luxury Spa Treatments",
+  //   subtitle: "Indulge in our signature therapies",
+  // },
   {
     image: "/images/image4.png",
     title: "N Wellness Membership",
@@ -152,7 +152,7 @@ const services = [
   {
     title: "Bridal Facial",
     description: "A luxurious skin prep ritual designed to give every bride a radiant, photo-ready glow.",
-    price: "₹6,900",
+    price: "₹7,999",
     duration: "75 minutes",
     features: [
       "Bridal Glow",
@@ -432,6 +432,7 @@ const Home = () => {
           {services.map((service, index) => {
             const Icon = service.icon;
             const isInCart = cartItems.some(item => item.title === service.title);
+            const isLastService = index === services.length - 1;
             return (
               <motion.div
                 key={index}
@@ -460,18 +461,20 @@ const Home = () => {
                     {service.duration}
                   </span>
                 </div>
-                {/* Premium Membership Price */}
-                <div className="mb-4 flex items-center gap-2">
-                  <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
-                    {/* Premium Membership */}
-                    <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1 opacity-80" />
-                  </span>
-                  <span className="text-base sm:text-lg font-bold text-[#98A869]">
-                    ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                  </span>
-                  <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
-                  <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
-                </div>
+                {/* Premium Membership Price - Hidden for last service */}
+                {!isLastService && (
+                  <div className="mb-4 flex items-center gap-2">
+                    <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
+                      Premium Membership
+                      {/* <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 ml-1 opacity-80" /> */}
+                    </span>
+                    <span className="text-base sm:text-lg font-bold text-[#98A869]">
+                      ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </span>
+                    <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
+                    <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
+                  </div>
+                )}
                 <ul className="space-y-1 sm:space-y-2 mb-4">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center text-gray-600 text-xs sm:text-sm">
