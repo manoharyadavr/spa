@@ -254,8 +254,8 @@ const Cart = () => {
                         {/* Premium Membership Price */}
                         <div className="flex items-center gap-2 mt-1">
                           <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
-                          {/* Premium Membership */}
-                          <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1" />
+                          Premium Membership
+{/*                           <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1" /> */}
                           </span>
                           <span className="text-base font-bold text-[#98A869]">
                             ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6 * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
