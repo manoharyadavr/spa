@@ -304,7 +304,6 @@ const Services = () => {
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {servicesWithMemberPrice.map((service, index) => {
-            const Icon = service.icon;
             const isLastService = index === servicesWithMemberPrice.length - 1;
             const cartItem = cartItems.find(item => item.title === service.title);
             const quantity = cartItem ? cartItem.quantity || 1 : 0;
@@ -312,14 +311,10 @@ const Services = () => {
               <motion.div
                 key={index}
                 className="bg-white rounded-2xl shadow-lg flex flex-col h-full p-6 transition hover:shadow-xl"
-                variants={fadeInUp}
-                initial="hidden"
-                animate={isMounted ? "visible" : "hidden"}
-                custom={index}
-                whileHover={{ 
-                  scale: 1.02,
-                  transition: { duration: 0.15 }
-                }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ delay: index * 0.1 }}
               >
                 <img src={service.image} alt={service.title} className="w-full h-36 object-cover rounded-xl mb-4" />
                 <h2 className="text-xl font-bold text-[#98A869] mb-1">{service.title}</h2>
@@ -343,15 +338,7 @@ const Services = () => {
                     </div>
                   </div>
                 )}
-                <div className="text-sm font-semibold text-gray-700 mb-1">Includes:</div>
-                <ul className="text-sm text-gray-600 space-y-1 mb-2">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-[#98A869] mr-2" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm text-gray-600 mb-4">{service.description}</p>
                 {quantity === 0 ? (
                   <button
                     onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
