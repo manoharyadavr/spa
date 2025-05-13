@@ -150,7 +150,7 @@ const services = [
   {
     title: "Bridal Facial",
     description: "A luxurious skin prep ritual designed to give every bride a radiant, photo-ready glow.",
-    price: "₹6,900",
+    price: "₹7,999",
     duration: "75 minutes",
     features: [
       "Bridal Glow",
@@ -300,6 +300,7 @@ const Services = () => {
           {services.map((service, index) => {
             const Icon = service.icon;
             const isInCart = cartItems.some(item => item.title === service.title);
+            const isLastService = index === services.length - 1;
             return (
               <motion.div
                 key={index}
@@ -377,23 +378,24 @@ const Services = () => {
                       <span className="text-sm sm:text-base">{service.duration}</span>
                     </div>
                   </motion.div>
-                  {/* Premium Membership Price */}
-                  <motion.div
-                    className="mb-4 flex items-center gap-2"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                    transition={{ delay: 0.32, duration: 0.3 }}
-                  >
-                    <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
-                      {/* Premium Membership */}
-                      <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1 opacity-80" />
-                    </span>
-                    <span className="text-lg sm:text-xl font-bold text-[#98A869]">
-                      ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                    </span>
-                    <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
-                    <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
-                  </motion.div>
+                  
+                  {!isLastService && (
+                    <motion.div
+                      className="mb-4 flex items-center gap-2"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                      transition={{ delay: 0.32, duration: 0.3 }}
+                    >
+                      <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
+                        Premium Membership
+                      </span>
+                      <span className="text-lg sm:text-xl font-bold text-[#98A869]">
+                        ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      </span>
+                      <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
+                      <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
+                    </motion.div>
+                  )}
 
                   <motion.ul 
                     className="space-y-2 mb-6 flex-grow"
