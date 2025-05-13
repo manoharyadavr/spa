@@ -219,6 +219,12 @@ const services = [
   }
 ];
 
+// Add memberPrice to each service
+const servicesWithMemberPrice = services.map(service => ({
+  ...service,
+  memberPrice: service.memberPrice || `₹${(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+}));
+
 const Services = () => {
   const [isMounted, setIsMounted] = React.useState(false);
   const { addToCart, cartItems } = useCart();
@@ -297,14 +303,15 @@ const Services = () => {
         transition={{ delay: 0.4, duration: 0.3 }}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => {
+          {servicesWithMemberPrice.map((service, index) => {
             const Icon = service.icon;
-            const isInCart = cartItems.some(item => item.title === service.title);
-            const isLastService = index === services.length - 1;
+            const isLastService = index === servicesWithMemberPrice.length - 1;
+            const cartItem = cartItems.find(item => item.title === service.title);
+            const quantity = cartItem ? cartItem.quantity || 1 : 0;
             return (
               <motion.div
                 key={index}
-                className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+                className="bg-white rounded-2xl shadow-lg flex flex-col h-full p-6 transition hover:shadow-xl"
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isMounted ? "visible" : "hidden"}
@@ -314,172 +321,69 @@ const Services = () => {
                   transition: { duration: 0.15 }
                 }}
               >
-                {/* Service Image */}
-                <motion.div 
-                  className="relative h-48 sm:h-56 overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.img 
-                    src={service.image} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover"
-                    initial={{ scale: 1.1 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    whileHover={{ 
-                      scale: 1.1,
-                      transition: { duration: 0.3 }
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#98A869]/40 via-[#98A869]/20 to-transparent" />
-                  <motion.div 
-                    className="absolute top-4 right-4 bg-white/90 p-2 rounded-full"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <Icon className="h-5 w-5 text-[#98A869]" />
-                  </motion.div>
-                </motion.div>
-
-                {/* Service Content */}
-                <motion.div 
-                  className="p-4 sm:p-6 flex flex-col flex-grow"
-                  initial={{ opacity: 0 }}
-                  animate={isMounted ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ delay: 0.1, duration: 0.2 }}
-                >
-                  <motion.h3 
-                    className="text-xl sm:text-2xl font-bold text-[#98A869] mb-2 line-clamp-2"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                    transition={{ delay: 0.2, duration: 0.3 }}
-                  >
-                    {service.title}
-                  </motion.h3>
-                  <motion.p 
-                    className="text-sm sm:text-base text-gray-600 mb-4"
-                    initial={{ opacity: 0 }}
-                    animate={isMounted ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ delay: 0.25, duration: 0.3 }}
-                  >
-                    {service.description}
-                  </motion.p>
-                  
-                  <motion.div 
-                    className="flex items-center justify-between mb-1"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                    transition={{ delay: 0.3, duration: 0.3 }}
-                  >
-                    <span className="text-xl sm:text-2xl font-bold text-[#98A869]">{service.price}</span>
-                    <div className="flex items-center text-gray-600">
-                      <Clock className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-                      <span className="text-sm sm:text-base">{service.duration}</span>
+                <img src={service.image} alt={service.title} className="w-full h-36 object-cover rounded-xl mb-4" />
+                <h2 className="text-xl font-bold text-[#98A869] mb-1">{service.title}</h2>
+                <div className="text-gray-500 text-sm mb-3">{service.duration}</div>
+                {isLastService ? (
+                  <div className="flex items-center justify-center gap-8 mb-4">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
                     </div>
-                  </motion.div>
-                  
-                  {!isLastService && (
-                    <motion.div
-                      className="mb-4 flex items-center gap-2"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                      transition={{ delay: 0.32, duration: 0.3 }}
-                    >
-                      <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
-                        Premium Membership
-                      </span>
-                      <span className="text-lg sm:text-xl font-bold text-[#98A869]">
-                        ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                      </span>
-                      <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
-                      <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
-                    </motion.div>
-                  )}
-
-                  <motion.ul 
-                    className="space-y-2 mb-6 flex-grow"
-                    initial={{ opacity: 0 }}
-                    animate={isMounted ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ delay: 0.35, duration: 0.3 }}
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-8 mb-4">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-gray-800">{service.price}</div>
+                      <div className="text-xs text-gray-400 mt-1">Regular</div>
+                    </div>
+                    <div className="border-l border-gray-200 h-8"></div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[#98A869]">{service.memberPrice}</div>
+                      <div className="text-xs text-[#98A869] mt-1">Member</div>
+                    </div>
+                  </div>
+                )}
+                <div className="text-sm font-semibold text-gray-700 mb-1">Includes:</div>
+                <ul className="text-sm text-gray-600 space-y-1 mb-2">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-[#98A869] mr-2" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                {quantity === 0 ? (
+                  <button
+                    onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
+                    className="mt-auto w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
                   >
-                    {service.features.map((feature, idx) => (
-                      <motion.li 
-                        key={idx} 
-                        className="flex items-start text-sm sm:text-base text-gray-600"
-                        initial={{ opacity: 0, x: -5 }}
-                        animate={isMounted ? { opacity: 1, x: 0 } : { opacity: 0, x: -5 }}
-                        transition={{ delay: 0.4 + idx * 0.05, duration: 0.2 }}
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Add to Cart
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2 mt-auto">
+                    <Link to="/cart" className="flex-1">
+                      <button
+                        className="w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
                       >
-                        <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#98A869] mr-2 mt-0.5 flex-shrink-0" />
-                        <span className="line-clamp-1">{feature}</span>
-                      </motion.li>
-                    ))}
-                  </motion.ul>
-
-                  {isInCart ? (
-                    <div className="flex flex-row gap-2 items-end">
-                      <Link to="/cart" className="flex-1">
-                        <motion.button
-                          style={{ minWidth: 0, width: '100%' }}
-                          className="w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto flex items-center justify-center"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                          transition={{ delay: 0.5, duration: 0.3 }}
-                        >
-                          <ShoppingCart className="w-5 h-5 mr-2" />
-                          Go to Cart
-                        </motion.button>
-                      </Link>
-                      <div className="flex flex-col items-end ml-1">
-                        <motion.button
-                          onClick={() => {
-                            toast.dismiss();
-                            addToCart(service);
-                            toast.success('Service added to cart!');
-                          }}
-                          className="relative bg-white border-2 border-[#98A869] text-[#98A869] text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/10 transition-colors duration-200 text-sm sm:text-base flex items-center justify-center min-w-[48px] px-3"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                          transition={{ delay: 0.5, duration: 0.3 }}
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                          </svg>
-                          {(() => {
-                            const cartItem = cartItems.find(item => item.title === service.title);
-                            return cartItem && cartItem.quantity > 0 ? (
-                              <span className="absolute -top-1 -right-1 bg-[#98A869] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                                {cartItem.quantity}
-                              </span>
-                            ) : null;
-                          })()}
-                        </motion.button>
-                      </div>
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Go to Cart
+                      </button>
+                    </Link>
+                    <div className="relative">
+                      <button
+                        onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
+                        className="w-10 h-10 bg-white border-2 border-[#98A869] text-[#98A869] rounded-full flex items-center justify-center text-xl font-bold hover:bg-[#98A869]/10 transition"
+                        aria-label="Add one more"
+                      >
+                        +
+                      </button>
+                      <span className="absolute -top-2 -right-2 bg-[#98A869] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                        {quantity}
+                      </span>
                     </div>
-                  ) : (
-                    <motion.button
-                      onClick={() => {
-                        toast.dismiss();
-                        addToCart(service);
-                        toast.success('Service added to cart!');
-                      }}
-                      className="block w-full bg-[#98A869] text-white text-center py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-[#98A869]/90 transition-colors duration-200 text-sm sm:text-base mt-auto flex items-center justify-center"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={isMounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                      transition={{ delay: 0.5, duration: 0.3 }}
-                    >
-                      <ShoppingCart className="w-5 h-5 mr-2" />
-                      Add to Cart
-                    </motion.button>
-                  )}
-                </motion.div>
+                  </div>
+                )}
               </motion.div>
             );
           })}
