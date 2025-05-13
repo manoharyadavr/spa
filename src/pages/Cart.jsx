@@ -79,6 +79,10 @@ const Cart = () => {
         amount: getTotalDeposit(),
         customerDetails
       });
+      // const { data: order } = await axios.post('http://localhost:5000/api/payment/create-order', {
+      //   amount: getTotalDeposit(),
+      //   customerDetails
+      // });
 
       // Initialize Razorpay
       const options = {
@@ -98,6 +102,13 @@ const Cart = () => {
               cartItems,
               customerDetails
             });
+            // const { data } = await axios.post('http://localhost:5000/api/payment/verify-payment', {
+            //   razorpay_order_id: response.razorpay_order_id,
+            //   razorpay_payment_id: response.razorpay_payment_id,
+            //   razorpay_signature: response.razorpay_signature,
+            //   cartItems,
+            //   customerDetails
+            // });
 
             if (data.verified && data.clearCart) {
               clearCart();
@@ -196,11 +207,13 @@ const Cart = () => {
                   transition={{ delay: index * 0.1 }}
                   className="flex items-start space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
                 >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-24 h-24 object-cover rounded-lg"
-                  />
+                  <div className="w-16 h-16 flex-shrink-0">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
                   <div className="flex-grow">
                     <h3 className="text-lg font-semibold text-[#98A869]">{item.title}</h3>
                     <p className="text-gray-600 text-sm mb-2">{item.description}</p>
@@ -227,7 +240,6 @@ const Cart = () => {
                             description: item.description,
                             duration: item.duration,
                             image: item.image,
-                            icon: item.icon,
                             whatsapp: item.whatsapp
                           })}
                           className="w-8 h-8 rounded-full border border-gray-300 text-[#98A869] text-lg font-bold flex items-center justify-center hover:bg-[#FEDEB8]/40 transition-colors duration-200"
