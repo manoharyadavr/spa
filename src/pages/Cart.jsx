@@ -205,15 +205,13 @@ const Cart = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-start space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
+                  className="flex flex-col sm:flex-row sm:items-start sm:space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
                 >
-                  <div className="w-16 h-16 flex-shrink-0">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-24 h-24 object-cover rounded-lg"
+                  />
                   <div className="flex-grow">
                     <h3 className="text-lg font-semibold text-[#98A869]">{item.title}</h3>
                     <p className="text-gray-600 text-sm mb-2">{item.description}</p>
@@ -255,7 +253,7 @@ const Cart = () => {
                         <div className="flex items-center gap-2 mt-1">
                           <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
                           Premium Membership
-{/*                           <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1" /> */}
+                          {/* <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1" /> */}
                           </span>
                           <span className="text-base font-bold text-[#98A869]">
                             ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6 * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
@@ -268,7 +266,7 @@ const Cart = () => {
                   </div>
                   <button
                     onClick={() => removeFromCart(item.title)}
-                    className="text-red-500 hover:text-red-600 transition-colors duration-200 ml-2"
+                    className="mt-2 sm:mt-0 sm:ml-2 text-red-500 hover:text-red-600 transition-colors duration-200 self-end"
                     aria-label="Remove item"
                   >
                     <Trash2 className="w-5 h-5" />
