@@ -199,28 +199,51 @@ const Cart = () => {
           {/* Cart Items */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg p-6">
-              {cartItems.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex flex-col sm:flex-row sm:items-start sm:space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-24 h-24 object-cover rounded-lg"
-                  />
-                  <div className="flex-grow">
-                    <h3 className="text-lg font-semibold text-[#98A869]">{item.title}</h3>
-                    <p className="text-gray-600 text-sm mb-2">{item.description}</p>
-                    <div className="flex items-center text-gray-500 text-sm mb-2">
-                      <Clock className="w-4 h-4 mr-1" />
-                      <span>{item.duration}</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                      <div className="flex items-center gap-2">
+              {cartItems.map((item, index) => {
+                const isSignature = item.title === 'N Wellness Signature Body Treatment';
+                const memberPrice = `₹${(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+                const total = (parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString();
+                const deposit = (parseFloat(item.deposit.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString();
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-24 h-24 object-cover rounded-lg mb-3 sm:mb-0"
+                    />
+                    <div className="flex-grow w-full">
+                      <h3 className="text-lg font-semibold text-[#98A869] mb-1">{item.title}</h3>
+                      <p className="text-gray-600 text-sm mb-2">{item.description}</p>
+                      <div className="flex items-center text-gray-500 text-sm mb-2">
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span>{item.duration}</span>
+                      </div>
+                      {/* Price Row */}
+                      {!isSignature ? (
+                        <div className="flex items-center gap-6 mb-2">
+                          <div className="text-center">
+                            <div className="text-base font-bold text-gray-800">{item.price}</div>
+                            <div className="text-xs text-gray-400 mt-1">Regular</div>
+                          </div>
+                          <div className="border-l border-gray-200 h-8"></div>
+                          <div className="text-center flex flex-col items-center">
+                            <span className="text-base font-bold text-[#98A869]">{memberPrice}</span>
+                            <div className="text-xs text-[#98A869] mt-1">Member</div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mb-2">
+                          <span className="text-lg font-bold text-[#98A869]">{item.price}</span>
+                        </div>
+                      )}
+                      {/* Quantity Controls */}
+                      <div className="flex items-center gap-2 mt-2 mb-2">
                         <button
                           onClick={() => decrementQuantity(item.title)}
                           className="w-8 h-8 rounded-full border border-gray-300 text-[#98A869] text-lg font-bold flex items-center justify-center hover:bg-[#FEDEB8]/40 transition-colors duration-200"
@@ -246,33 +269,28 @@ const Cart = () => {
                           +
                         </button>
                       </div>
-                      <div className="flex flex-col sm:items-end">
-                        <p className="text-[#98A869] font-semibold">Total: ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString()}</p>
-                        <p className="text-sm text-gray-500">Deposit (20%): ₹{(parseFloat(item.deposit.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString()}</p>
-                        {/* Premium Membership Price */}
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
-                          Premium Membership
-                          {/* <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1" /> */}
-                          </span>
-                          <span className="text-base font-bold text-[#98A869]">
-                            ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6 * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                          </span>
-                          <span className="text-xs text-gray-400 line-through ml-1">₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                          <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
+                      {/* Total & Deposit */}
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-2">
+                        <div>
+                          <span className="text-gray-500 text-xs">Total: </span>
+                          <span className="text-[#98A869] font-semibold">₹{total}</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400 text-xs">Deposit (20%): </span>
+                          <span className="text-gray-700 font-semibold">₹{deposit}</span>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <button
-                    onClick={() => removeFromCart(item.title)}
-                    className="mt-2 sm:mt-0 sm:ml-2 text-red-500 hover:text-red-600 transition-colors duration-200 self-end"
-                    aria-label="Remove item"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </motion.div>
-              ))}
+                    <button
+                      onClick={() => removeFromCart(item.title)}
+                      className="mt-2 sm:mt-0 sm:ml-2 text-red-500 hover:text-red-600 transition-colors duration-200 self-end"
+                      aria-label="Remove item"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
