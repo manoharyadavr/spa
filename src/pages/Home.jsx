@@ -53,14 +53,9 @@ const carouselSlides = [
 const services = [
   {
     title: "Japanese Head Spa",
-    description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
+    description: "A 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Deep scalp cleansing",
-      "Head massage",
-      "Premium hair treatment"
-    ],
     image: "/images/japaneseHeadSpa.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -70,11 +65,6 @@ const services = [
     description: "Smooth, heated basalt stones glide over muscles to melt away tension and boost circulation.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Heated Stones",
-      "Deep Muscle Relief",
-      "Improved Circulation"
-    ],
     image: "/images/warmStoneMassage.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -84,67 +74,42 @@ const services = [
     description: "A bespoke blend of pure essential oils is gently massaged into your skin.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Custom Oil Blend",
-      "Gentle Massage",
-      "Stress Relief"
-    ],
     image: "/images/aromatherapy.jpg",
     icon: Leaf,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Body Polishing",
-    description: "Experience our signature 6-step Body Polishing Ritual.",
+    description: "Experience our signature 6‑step Body Polishing Ritual",
     price: "₹9,800",
     duration: "90 minutes",
-    features: [
-      "Full Body Treatment",
-      "Skin Rejuvenation",
-      "Natural Glow"
-    ],
     image: "/images/bodyPolishing.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Foot Reflexology",
-    description: "Targeted pressure massage on specific foot zones.",
+    description: "Targeted pressure massage on specific foot zones",
     price: "₹3,000",
     duration: "35 minutes",
-    features: [
-      "Pressure Points",
-      "Stress Relief",
-      "Energy Balance"
-    ],
     image: "/images/footReflexology.jpg",
     icon: Footprints,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "OxyGlow Facial",
-    description: "A 9-step facial treatment for radiant, glowing skin.",
+    description: "Our 11-step OxyGlow Facial is designed to deeply cleanse, hydrate, and oxygenate your skin for an instant radiant glow.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Deep Cleansing",
-      "Oxygen Therapy",
-      "Skin Brightening"
-    ],
     image: "/images/oxyglowFacial.jpg",
     icon: Smile,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "O3+ Facial",
-    description: "A professional-grade facial using active oxygen and high-performance ingredients.",
+    description: "A professional-grade facial that uses active oxygen and high-performance ingredients",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Active Oxygen",
-      "Premium Products",
-      "Deep Nourishment"
-    ],
     image: "images/o3+facial.jpg",
     icon: Star,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -154,67 +119,24 @@ const services = [
     description: "A luxurious skin prep ritual designed to give every bride a radiant, photo-ready glow.",
     price: "₹7,999",
     duration: "75 minutes",
-    features: [
-      "Bridal Glow",
-      "Photo-Ready Skin",
-      "Premium Care"
-    ],
     image: "/images/bridalFacial.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Shirodhara Therapy",
-    description: "An Ayurvedic therapy where a steady stream of warm herbal oil is poured over the forehead.",
+    description: "Ayurvedic therapy where a steady stream of warm herbal oil is poured over the forehead.",
     price: "₹5,500",
     duration: "45 minutes",
-    features: [
-      "Ayurvedic Treatment",
-      "Stress Relief",
-      "Mental Clarity"
-    ],
     image: "/images/shirodharaTherapy.jpg",
     icon: Flower2,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
-  // {
-  //   title: "Sound Therapy",
-  //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
-  //   price: "₹2,000",
-  //   duration: "15 minutes",
-  //   features: [
-  //     "Healing Vibrations",
-  //     "Deep Relaxation",
-  //     "Energy Balance"
-  //   ],
-  //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
-  //   icon: Music,
-  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
-  // },
-  // {
-  //   title: "Sound Therapy",
-  //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
-  //   price: "₹2,000",
-  //   duration: "15 minutes",
-  //   features: [
-  //     "Healing Vibrations",
-  //     "Deep Relaxation",
-  //     "Energy Balance"
-  //   ],
-  //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
-  //   icon: Music,
-  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
-  // },
   {
     title: "N Wellness Signature Body Treatment",
-    description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
+    description: "Indulge in our ultimate full-body ritual combining a relaxing full body massage, OxyGlow facial, Japanese head spa.",
     price: "₹16,000",
     duration: "180 minutes",
-    features: [
-      "Full Body Treatment",
-      "Premium Experience",
-      "Complete Relaxation"
-    ],
     image: "/images/nwellnessSignature.png",
     icon: Award,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -470,15 +392,7 @@ const Home = () => {
                     </div>
                   </div>
                 )}
-                <div className="text-sm font-semibold text-gray-700 mb-1">Includes:</div>
-                <ul className="text-sm text-gray-600 space-y-1 mb-2">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-[#98A869] mr-2" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm text-gray-600 mb-4">{service.description}</p>
                 {quantity === 0 ? (
                   <button
                     onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
