@@ -50,7 +50,6 @@ const Cart = () => {
   });
   const [availableSlots, setAvailableSlots] = useState([]);
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
-  const [isDateInvalid, setIsDateInvalid] = useState(false);
 
   // Get minimum date (today)
   const getMinDate = () => {
@@ -87,17 +86,10 @@ const Cart = () => {
   const handleCustomerDetailsChange = async (e) => {
     const { name, value } = e.target;
     let newValue = value;
+    // Ensure date is always in YYYY-MM-DD for the input
     if (name === 'date') {
       newValue = toInputDateFormat(value);
-      // Check if the date is in the past
-      const today = getMinDate();
-      if (newValue && newValue < today) {
-        setIsDateInvalid(true);
-        setError('Please select a valid (future) date.');
-      } else {
-        setIsDateInvalid(false);
-        setError(null);
-      }
+      console.log('Date input value:', value, 'Converted:', newValue);
     }
     setCustomerDetails(prev => ({
       ...prev,
@@ -121,28 +113,25 @@ const Cart = () => {
   const handleCustomerDetailsSubmit = async (e) => {
     e.preventDefault();
     const trimmedDate = customerDetails.date.trim();
-    const today = getMinDate();
-    console.log('Comparing:', trimmedDate, '<', today, '=', trimmedDate < today);
-    if (trimmedDate < today) {
-      setError('Please select a valid (future) date.');
-      return;
-    }
     console.log('Submitting booking for date:', trimmedDate, 'time:', customerDetails.time);
     // Validate date and time
     if (!trimmedDate || !customerDetails.time) {
       setError('Please select both date and time');
       return;
     }
+
     try {
       // Check if the selected time slot is still available
       const { data } = await axios.post('https://spabackend-nd53.onrender.com/api/booking/check-availability', {
         date: trimmedDate,
         time: customerDetails.time
       });
+
       if (!data.available) {
         setError(data.reason || 'This time slot is no longer available. Please select another time.');
         return;
       }
+
       // Create booking
       await axios.post('https://spabackend-nd53.onrender.com/api/booking/create', {
         date: trimmedDate,
@@ -150,6 +139,7 @@ const Cart = () => {
         customerDetails,
         cartItems
       });
+
       setShowCustomerForm(false);
       await handlePayment();
     } catch (error) {
@@ -474,15 +464,10 @@ const Cart = () => {
                     onChange={handleCustomerDetailsChange}
                     required
                     min={getMinDate()}
-                    pattern="\\d{4}-\\d{2}-\\d{2}"
-                    inputMode="none"
-                    className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869] [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer ${isDateInvalid ? 'border-red-500 ring-red-200' : 'border-gray-200'}`}
+                    className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869] [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                   />
                   <Calendar className="absolute right-3 top-2.5 w-5 h-5 text-gray-400 pointer-events-none" />
                 </div>
-                {isDateInvalid && (
-                  <p className="text-xs text-red-600 mt-1 font-semibold">Please select a valid (future) date.</p>
-                )}
               </div>
               <div>
                 <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">
