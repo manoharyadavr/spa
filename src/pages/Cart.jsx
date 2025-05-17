@@ -26,14 +26,13 @@ function toInputDateFormat(dateStr) {
   return dateStr;
 }
 
-// Utility to format time in 12-hour format with AM/PM
-function formatTime12Hour(time24) {
-  if (!time24) return '';
-  const [hourStr, minute] = time24.split(':');
-  let hour = parseInt(hourStr, 10);
+// Utility to format time to 12-hour format with AM/PM
+function formatTime12Hour(timeStr) {
+  if (!timeStr) return '';
+  const [hour, minute] = timeStr.split(':').map(Number);
   const ampm = hour >= 12 ? 'PM' : 'AM';
-  hour = hour % 12 || 12; // Convert 0 to 12 for 12 AM
-  return `${hour}:${minute} ${ampm}`;
+  const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+  return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
 }
 
 const Cart = () => {
@@ -68,7 +67,7 @@ const Cart = () => {
       setIsLoadingSlots(true);
       setError(null);
       
-      const response = await axios.get(`https://spabackend-nd53.onrender.com/api/booking/available-slots/${trimmedDate}`);
+      const response = await axios.get(`https://spabackend-1.onrender.com/api/booking/available-slots/${trimmedDate}`);
       if (response.data && response.data.slots) {
         setAvailableSlots(response.data.slots);
       } else {
@@ -113,33 +112,38 @@ const Cart = () => {
   const handleCustomerDetailsSubmit = async (e) => {
     e.preventDefault();
     const trimmedDate = customerDetails.date.trim();
-    console.log('Submitting booking for date:', trimmedDate, 'time:', customerDetails.time);
+    const selectedDate = new Date(trimmedDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Remove time part
+
+    // Check for past date
+    if (selectedDate < today) {
+      setError('You cannot select a completed (past) date.');
+      return;
+    }
+
     // Validate date and time
     if (!trimmedDate || !customerDetails.time) {
       setError('Please select both date and time');
       return;
     }
-
     try {
       // Check if the selected time slot is still available
-      const { data } = await axios.post('https://spabackend-nd53.onrender.com/api/booking/check-availability', {
+      const { data } = await axios.post('https://spabackend-1.onrender.com/api/booking/check-availability', {
         date: trimmedDate,
         time: customerDetails.time
       });
-
       if (!data.available) {
         setError(data.reason || 'This time slot is no longer available. Please select another time.');
         return;
       }
-
       // Create booking
-      await axios.post('https://spabackend-nd53.onrender.com/api/booking/create', {
+      await axios.post('https://spabackend-1.onrender.com/api/booking/create', {
         date: trimmedDate,
         time: customerDetails.time,
         customerDetails,
         cartItems
       });
-
       setShowCustomerForm(false);
       await handlePayment();
     } catch (error) {
@@ -154,7 +158,7 @@ const Cart = () => {
       setError(null);
 
       // Create order
-      const { data: order } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/create-order', {
+      const { data: order } = await axios.post('https://spabackend-1.onrender.com/api/payment/create-order', {
         amount: getTotalDeposit(),
         customerDetails
       });
@@ -170,7 +174,7 @@ const Cart = () => {
         handler: async function (response) {
           try {
             // Verify payment
-            const { data } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/verify-payment', {
+            const { data } = await axios.post('https://spabackend-1.onrender.com/api/payment/verify-payment', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
