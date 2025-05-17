@@ -35,6 +35,24 @@ function formatTime12Hour(timeStr) {
   return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
 }
 
+// Utility to check if a slot is in the future
+function isFutureTimeSlot(dateStr, timeStr) {
+  const now = new Date();
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const [hour, minute] = timeStr.split(':').map(Number);
+  const slotDate = new Date(year, month - 1, day, hour, minute, 0, 0);
+  return slotDate > now;
+}
+
+// Utility to check if a date is today or in the future
+function isTodayOrFuture(dateStr) {
+  const today = new Date();
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const selected = new Date(year, month - 1, day, 0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+  return selected >= today;
+}
+
 const Cart = () => {
   const { cartItems, addToCart, removeFromCart, decrementQuantity, getTotalDeposit, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -114,6 +132,11 @@ const Cart = () => {
     
     if (!trimmedDate || !customerDetails.time) {
       setError('Please select both date and time');
+      return;
+    }
+    // Prevent booking with a past date
+    if (!isTodayOrFuture(trimmedDate)) {
+      setError('Please select today or a future date');
       return;
     }
 
@@ -479,11 +502,18 @@ const Cart = () => {
                     {isLoadingSlots ? (
                       <option value="" disabled>Loading available slots...</option>
                     ) : availableSlots.length > 0 ? (
-                      availableSlots.map((slot) => (
-                        <option key={slot} value={slot}>
-                          {formatTime12Hour(slot)}
-                        </option>
-                      ))
+                      availableSlots
+                        .filter(slot => {
+                          if (customerDetails.date === getMinDate()) {
+                            return isFutureTimeSlot(customerDetails.date, slot);
+                          }
+                          return true;
+                        })
+                        .map((slot) => (
+                          <option key={slot} value={slot}>
+                            {formatTime12Hour(slot)}
+                          </option>
+                        ))
                     ) : (
                       <option value="" disabled>No slots available</option>
                     )}
