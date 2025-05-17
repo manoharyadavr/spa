@@ -5,6 +5,36 @@ import { useCart } from '../context/CartContext';
 import { Clock, Trash2, Calendar } from 'lucide-react';
 import axios from 'axios';
 
+// Utility to format YYYY-MM-DD to DD-MM-YYYY for display
+function formatDateDisplay(dateStr) {
+  if (!dateStr) return '';
+  const [year, month, day] = dateStr.split('-');
+  if (!year || !month || !day) return dateStr;
+  return `${day}-${month}-${year}`;
+}
+
+// Utility to format DD-MM-YYYY to YYYY-MM-DD for input
+function toInputDateFormat(dateStr) {
+  if (!dateStr) return '';
+  // If already in YYYY-MM-DD, return as is
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+  // If in DD-MM-YYYY, convert
+  if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) {
+    const [day, month, year] = dateStr.split('-');
+    return `${year}-${month}-${day}`;
+  }
+  return dateStr;
+}
+
+// Utility to format 24-hour time (HH:mm) to 12-hour format with AM/PM
+function formatTime12Hour(timeStr) {
+  if (!timeStr) return '';
+  const [hour, minute] = timeStr.split(':').map(Number);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+  return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
+}
+
 const Cart = () => {
   const { cartItems, addToCart, removeFromCart, decrementQuantity, getTotalDeposit, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -17,6 +47,8 @@ const Cart = () => {
     date: '',
     time: ''
   });
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
   // Get minimum date (today)
   const getMinDate = () => {
@@ -27,46 +59,92 @@ const Cart = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // Get available time slots
-  const getTimeSlots = () => {
-    const slots = [];
-    const startHour = 10; // 10 AM
-    const endHour = 20; // 8 PM
-    
-    for (let hour = startHour; hour < endHour; hour++) {
-      slots.push(`${hour.toString().padStart(2, '0')}:00`);
-      slots.push(`${hour.toString().padStart(2, '0')}:30`);
+  // Fetch available time slots when date changes
+  const fetchAvailableSlots = async (date) => {
+    const trimmedDate = date.trim();
+    console.log('Fetching slots for date:', trimmedDate);
+    try {
+      setIsLoadingSlots(true);
+      setError(null);
+      
+      const response = await axios.get(`http://localhost:5000/api/booking/available-slots/${trimmedDate}`);
+      if (response.data && response.data.slots) {
+        setAvailableSlots(response.data.slots);
+      } else {
+        setAvailableSlots([]);
+      }
+    } catch (error) {
+      console.error('Error fetching available slots:', error);
+      setError('Failed to fetch available time slots');
+      setAvailableSlots([]);
+    } finally {
+      setIsLoadingSlots(false);
     }
-    return slots;
   };
 
-  const handleCustomerDetailsChange = (e) => {
+  const handleCustomerDetailsChange = async (e) => {
     const { name, value } = e.target;
+    let newValue = value;
+    // Ensure date is always in YYYY-MM-DD for the input
+    if (name === 'date') {
+      newValue = toInputDateFormat(value);
+      console.log('Date input value:', value, 'Converted:', newValue);
+    }
     setCustomerDetails(prev => ({
       ...prev,
-      [name]: value
+      [name]: newValue
     }));
+
+    // Reset time selection and fetch available slots when date changes
+    if (name === 'date') {
+      setCustomerDetails(prev => ({
+        ...prev,
+        time: ''
+      }));
+      if (newValue) {
+        await fetchAvailableSlots(newValue);
+      } else {
+        setAvailableSlots([]);
+      }
+    }
   };
 
   const handleCustomerDetailsSubmit = async (e) => {
     e.preventDefault();
-    
+    const trimmedDate = customerDetails.date.trim();
+    console.log('Submitting booking for date:', trimmedDate, 'time:', customerDetails.time);
     // Validate date and time
-    if (!customerDetails.date || !customerDetails.time) {
+    if (!trimmedDate || !customerDetails.time) {
       setError('Please select both date and time');
       return;
     }
 
-    const selectedDate = new Date(`${customerDetails.date}T${customerDetails.time}`);
-    const now = new Date();
-    
-    if (selectedDate < now) {
-      setError('Please select a future date and time');
-      return;
+    try {
+      // Check if the selected time slot is still available
+      const { data } = await axios.post('http://localhost:5000/api/booking/check-availability', {
+        date: trimmedDate,
+        time: customerDetails.time
+      });
+
+      if (!data.available) {
+        setError(data.reason || 'This time slot is no longer available. Please select another time.');
+        return;
+      }
+
+      // Create booking
+      await axios.post('http://localhost:5000/api/booking/create', {
+        date: trimmedDate,
+        time: customerDetails.time,
+        customerDetails,
+        cartItems
+      });
+
+      setShowCustomerForm(false);
+      await handlePayment();
+    } catch (error) {
+      console.error('Error checking slot availability:', error);
+      setError(error.response?.data?.error || 'Failed to check slot availability. Please try again.');
     }
-    
-    setShowCustomerForm(false);
-    await handlePayment();
   };
 
   const handlePayment = async () => {
@@ -75,7 +153,7 @@ const Cart = () => {
       setError(null);
 
       // Create order
-      const { data: order } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/create-order', {
+      const { data: order } = await axios.post('http://localhost:5000/api/payment/create-order', {
         amount: getTotalDeposit(),
         customerDetails
       });
@@ -91,7 +169,7 @@ const Cart = () => {
         handler: async function (response) {
           try {
             // Verify payment
-            const { data } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/verify-payment', {
+            const { data } = await axios.post('http://localhost:5000/api/payment/verify-payment', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -188,28 +266,51 @@ const Cart = () => {
           {/* Cart Items */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg p-6">
-              {cartItems.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex items-start space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-24 h-24 object-cover rounded-lg"
-                  />
-                  <div className="flex-grow">
-                    <h3 className="text-lg font-semibold text-[#98A869]">{item.title}</h3>
-                    <p className="text-gray-600 text-sm mb-2">{item.description}</p>
-                    <div className="flex items-center text-gray-500 text-sm mb-2">
-                      <Clock className="w-4 h-4 mr-1" />
-                      <span>{item.duration}</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                      <div className="flex items-center gap-2">
+              {cartItems.map((item, index) => {
+                const isSignature = item.title === 'N Wellness Signature Body Treatment';
+                const memberPrice = `₹${(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+                const total = (parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString();
+                const deposit = (parseFloat(item.deposit.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString();
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-24 h-24 object-cover rounded-lg mb-3 sm:mb-0"
+                    />
+                    <div className="flex-grow w-full">
+                      <h3 className="text-lg font-semibold text-[#98A869] mb-1">{item.title}</h3>
+                      <p className="text-gray-600 text-sm mb-2">{item.description}</p>
+                      <div className="flex items-center text-gray-500 text-sm mb-2">
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span>{item.duration}</span>
+                      </div>
+                      {/* Price Row */}
+                      {!isSignature ? (
+                        <div className="flex items-center gap-6 mb-2">
+                          <div className="text-center">
+                            <div className="text-base font-bold text-gray-800">{item.price}</div>
+                            <div className="text-xs text-gray-400 mt-1">Regular</div>
+                          </div>
+                          <div className="border-l border-gray-200 h-8"></div>
+                          <div className="text-center flex flex-col items-center">
+                            <span className="text-base font-bold text-[#98A869]">{memberPrice}</span>
+                            <div className="text-xs text-[#98A869] mt-1">Member</div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mb-2">
+                          <span className="text-lg font-bold text-[#98A869]">{item.price}</span>
+                        </div>
+                      )}
+                      {/* Quantity Controls */}
+                      <div className="flex items-center gap-2 mt-2 mb-2">
                         <button
                           onClick={() => decrementQuantity(item.title)}
                           className="w-8 h-8 rounded-full border border-gray-300 text-[#98A869] text-lg font-bold flex items-center justify-center hover:bg-[#FEDEB8]/40 transition-colors duration-200"
@@ -227,7 +328,6 @@ const Cart = () => {
                             description: item.description,
                             duration: item.duration,
                             image: item.image,
-                            icon: item.icon,
                             whatsapp: item.whatsapp
                           })}
                           className="w-8 h-8 rounded-full border border-gray-300 text-[#98A869] text-lg font-bold flex items-center justify-center hover:bg-[#FEDEB8]/40 transition-colors duration-200"
@@ -236,33 +336,28 @@ const Cart = () => {
                           +
                         </button>
                       </div>
-                      <div className="flex flex-col sm:items-end">
-                        <p className="text-[#98A869] font-semibold">Total: ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString()}</p>
-                        <p className="text-sm text-gray-500">Deposit (20%): ₹{(parseFloat(item.deposit.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString()}</p>
-                        {/* Premium Membership Price */}
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
-                          {/* Premium Membership */}
-                          <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1" />
-                          </span>
-                          <span className="text-base font-bold text-[#98A869]">
-                            ₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6 * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                          </span>
-                          <span className="text-xs text-gray-400 line-through ml-1">₹{(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                          <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
+                      {/* Total & Deposit */}
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-2">
+                        <div>
+                          <span className="text-gray-500 text-xs">Total: </span>
+                          <span className="text-[#98A869] font-semibold">₹{total}</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400 text-xs">Deposit (20%): </span>
+                          <span className="text-gray-700 font-semibold">₹{deposit}</span>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <button
-                    onClick={() => removeFromCart(item.title)}
-                    className="text-red-500 hover:text-red-600 transition-colors duration-200 ml-2"
-                    aria-label="Remove item"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </motion.div>
-              ))}
+                    <button
+                      onClick={() => removeFromCart(item.title)}
+                      className="mt-2 sm:mt-0 sm:ml-2 text-red-500 hover:text-red-600 transition-colors duration-200 self-end"
+                      aria-label="Remove item"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
@@ -364,7 +459,7 @@ const Cart = () => {
                     type="date"
                     id="date"
                     name="date"
-                    value={customerDetails.date}
+                    value={toInputDateFormat(customerDetails.date)}
                     onChange={handleCustomerDetailsChange}
                     required
                     min={getMinDate()}
@@ -384,21 +479,33 @@ const Cart = () => {
                     value={customerDetails.time}
                     onChange={handleCustomerDetailsChange}
                     required
-                    className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869] appearance-none"
+                    disabled={isLoadingSlots || !customerDetails.date}
+                    className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869] appearance-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                   >
                     <option value="">Select a time</option>
-                    {getTimeSlots().map((slot) => (
-                      <option key={slot} value={slot}>
-                        {slot}
-                      </option>
-                    ))}
+                    {isLoadingSlots ? (
+                      <option value="" disabled>Loading available slots...</option>
+                    ) : availableSlots.length > 0 ? (
+                      availableSlots.map((slot) => (
+                        <option key={slot} value={slot}>
+                          {formatTime12Hour(slot)}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="" disabled>No slots available</option>
+                    )}
                   </select>
                   <Clock className="absolute right-3 top-2.5 w-5 h-5 text-gray-400 pointer-events-none" />
                 </div>
+                {customerDetails.date === getMinDate() && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Only future time slots are available for today
+                  </p>
+                )}
+                {error && (
+                  <p className="text-xs text-red-500 mt-1">{error}</p>
+                )}
               </div>
-              {error && (
-                <p className="text-sm text-red-500 text-center">{error}</p>
-              )}
               <div className="flex space-x-4 pt-2">
                 <button
                   type="button"

@@ -21,21 +21,21 @@ const fadeIn = {
 };
 
 const carouselSlides = [
-  {
-    image: "/images/image1.png",
-    title: "Experience Ultimate Relaxation",
-    subtitle: "Discover our premium wellness services",
-  },
-  {
-    image: "/images/image2.png",
-    title: "Holistic Wellness Journey",
-    subtitle: "Transform your mind, body, and soul",
-  },
-  {
-    image: "/images/image3.png",
-    title: "Luxury Spa Treatments",
-    subtitle: "Indulge in our signature therapies",
-  },
+  // {
+  //   image: "/images/image1.png",
+  //   title: "Experience Ultimate Relaxation",
+  //   subtitle: "Discover our premium wellness services",
+  // },
+  // {
+  //   image: "/images/image2.png",
+  //   title: "Holistic Wellness Journey",
+  //   subtitle: "Transform your mind, body, and soul",
+  // },
+  // {
+  //   image: "/images/image3.png",
+  //   title: "Luxury Spa Treatments",
+  //   subtitle: "Indulge in our signature therapies",
+  // },
   {
     image: "/images/image4.png",
     title: "N Wellness Membership",
@@ -53,14 +53,9 @@ const carouselSlides = [
 const services = [
   {
     title: "Japanese Head Spa",
-    description: "A luxurious 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
+    description: "A 9-step ritual designed to cleanse, hydrate, and heal the scalp and hair.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Deep scalp cleansing",
-      "Head massage",
-      "Premium hair treatment"
-    ],
     image: "/images/japaneseHeadSpa.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Japanese%20Head%20Spa%20(₹6,500,%2060%20mins)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -70,11 +65,6 @@ const services = [
     description: "Smooth, heated basalt stones glide over muscles to melt away tension and boost circulation.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Heated Stones",
-      "Deep Muscle Relief",
-      "Improved Circulation"
-    ],
     image: "/images/warmStoneMassage.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Warm%20Stone%20Massage%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -84,67 +74,42 @@ const services = [
     description: "A bespoke blend of pure essential oils is gently massaged into your skin.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Custom Oil Blend",
-      "Gentle Massage",
-      "Stress Relief"
-    ],
     image: "/images/aromatherapy.jpg",
     icon: Leaf,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Aromatherapy%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Body Polishing",
-    description: "Experience our signature 6-step Body Polishing Ritual.",
+    description: "Experience our signature 6‑step Body Polishing Ritual",
     price: "₹9,800",
     duration: "90 minutes",
-    features: [
-      "Full Body Treatment",
-      "Skin Rejuvenation",
-      "Natural Glow"
-    ],
     image: "/images/bodyPolishing.jpg",
     icon: Gem,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Body%20Polishing%20(₹8,999,%201.5%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Foot Reflexology",
-    description: "Targeted pressure massage on specific foot zones.",
+    description: "Targeted pressure massage on specific foot zones",
     price: "₹3,000",
     duration: "35 minutes",
-    features: [
-      "Pressure Points",
-      "Stress Relief",
-      "Energy Balance"
-    ],
     image: "/images/footReflexology.jpg",
     icon: Footprints,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Foot%20Reflexology%20(₹3,000,%2035%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "OxyGlow Facial",
-    description: "A 9-step facial treatment for radiant, glowing skin.",
+    description: "Our 11-step OxyGlow Facial is designed to deeply cleanse, hydrate, and oxygenate your skin for an instant radiant glow.",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Deep Cleansing",
-      "Oxygen Therapy",
-      "Skin Brightening"
-    ],
     image: "/images/oxyglowFacial.jpg",
     icon: Smile,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20OxyGlow%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "O3+ Facial",
-    description: "A professional-grade facial using active oxygen and high-performance ingredients.",
+    description: "A professional-grade facial that uses active oxygen and high-performance ingredients",
     price: "₹6,500",
     duration: "60 minutes",
-    features: [
-      "Active Oxygen",
-      "Premium Products",
-      "Deep Nourishment"
-    ],
     image: "images/o3+facial.jpg",
     icon: Star,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20O3%2B%20Facial%20(₹6,500,%201%20hour)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -152,69 +117,26 @@ const services = [
   {
     title: "Bridal Facial",
     description: "A luxurious skin prep ritual designed to give every bride a radiant, photo-ready glow.",
-    price: "₹6,900",
+    price: "₹7,999",
     duration: "75 minutes",
-    features: [
-      "Bridal Glow",
-      "Photo-Ready Skin",
-      "Premium Care"
-    ],
     image: "/images/bridalFacial.jpg",
     icon: Crown,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Bridal%20Facial%20(₹6,900,%201.25%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
   {
     title: "Shirodhara Therapy",
-    description: "An Ayurvedic therapy where a steady stream of warm herbal oil is poured over the forehead.",
+    description: "Ayurvedic therapy where a steady stream of warm herbal oil is poured over the forehead.",
     price: "₹5,500",
     duration: "45 minutes",
-    features: [
-      "Ayurvedic Treatment",
-      "Stress Relief",
-      "Mental Clarity"
-    ],
     image: "/images/shirodharaTherapy.jpg",
     icon: Flower2,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Shirodhara%20Therapy%20(₹5,500,%2045%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
   },
-  // {
-  //   title: "Sound Therapy",
-  //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
-  //   price: "₹2,000",
-  //   duration: "15 minutes",
-  //   features: [
-  //     "Healing Vibrations",
-  //     "Deep Relaxation",
-  //     "Energy Balance"
-  //   ],
-  //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
-  //   icon: Music,
-  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
-  // },
-  // {
-  //   title: "Sound Therapy",
-  //   description: "Immerse yourself in the healing vibrations of Sound Therapy.",
-  //   price: "₹2,000",
-  //   duration: "15 minutes",
-  //   features: [
-  //     "Healing Vibrations",
-  //     "Deep Relaxation",
-  //     "Energy Balance"
-  //   ],
-  //   image: "https://static.wixstatic.com/media/35803c_54caea50dfed4c549b851e45075ddfec~mv2.png",
-  //   icon: Music,
-  //   whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20Sound%20Therapy%20(₹2,000,%2015%20minutes)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
-  // },
   {
     title: "N Wellness Signature Body Treatment",
-    description: "Indulge in our ultimate full-body ritual for complete rejuvenation.",
+    description: "Indulge in our ultimate full-body ritual combining a relaxing full body massage, OxyGlow facial, Japanese head spa.",
     price: "₹16,000",
     duration: "180 minutes",
-    features: [
-      "Full Body Treatment",
-      "Premium Experience",
-      "Complete Relaxation"
-    ],
     image: "/images/nwellnessSignature.png",
     icon: Award,
     whatsapp: "https://wa.me/919391803316?text=Hi,%20I%20would%20like%20to%20book%20N%20Wellness%20Signature%20Body%20Treatment%20(₹16,000,%203%20hours)%20at%20N%20Wellness.%20Please%20help%20me%20schedule%20an%20appointment."
@@ -263,6 +185,12 @@ const Home = () => {
       testimonialRef.current.scrollBy({ left: 350, behavior: "smooth" });
     }
   };
+
+  // Add memberPrice to each service
+  const servicesWithMemberPrice = services.map(service => ({
+    ...service,
+    memberPrice: service.memberPrice || `₹${(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+  }));
 
   return (
     <div className="bg-[#FEDEB8]/5 text-[#98A869]">
@@ -429,103 +357,73 @@ const Home = () => {
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Our Signature Services</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            const isInCart = cartItems.some(item => item.title === service.title);
+          {servicesWithMemberPrice.map((service, index) => {
+            const isLastService = index === servicesWithMemberPrice.length - 1;
+            const cartItem = cartItems.find(item => item.title === service.title);
+            const quantity = cartItem ? cartItem.quantity || 1 : 0;
             return (
               <motion.div
                 key={index}
-                className="relative bg-white p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-white rounded-2xl shadow-lg flex flex-col h-full p-6 transition hover:shadow-xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <div className="relative">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-32 sm:h-40 object-cover rounded-lg mb-4"
-                  />
-                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-[#98A869] p-1.5 sm:p-2 rounded-full text-white">
-                    <Icon size={16} className="w-4 h-4 sm:w-5 sm:h-5" />
+                <img src={service.image} alt={service.title} className="w-full h-36 object-cover rounded-xl mb-4" />
+                <h2 className="text-xl font-bold text-[#98A869] mb-1">{service.title}</h2>
+                <div className="text-gray-500 text-sm mb-3">{service.duration}</div>
+                {isLastService ? (
+                  <div className="flex items-center justify-center gap-8 mb-4">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 line-clamp-2">{service.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-4">{service.description}</p>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-[#98A869] font-semibold text-sm sm:text-base">{service.price}</span>
-                  <span className="text-gray-500 flex items-center text-xs sm:text-sm">
-                    <Clock size={14} className="mr-1" />
-                    {service.duration}
-                  </span>
-                </div>
-                {/* Premium Membership Price */}
-                <div className="mb-4 flex items-center gap-2">
-                  <span className="inline-block bg-[#FEDEB8]/60 text-[#98A869] text-xs font-semibold px-2 py-1 rounded">
-                    {/* Premium Membership */}
-                    <img src="/images/membership.png" alt="Premium Membership" className="w-4 h-4 mr-1 opacity-80" />
-                  </span>
-                  <span className="text-base sm:text-lg font-bold text-[#98A869]">
-                    ₹{(parseFloat(service.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                  </span>
-                  <span className="text-xs text-gray-400 line-through ml-1">{service.price}</span>
-                  <span className="text-xs text-[#98A869] font-semibold ml-1">40% OFF</span>
-                </div>
-                <ul className="space-y-1 sm:space-y-2 mb-4">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600 text-xs sm:text-sm">
-                      <CheckCircle size={14} className="text-[#98A869] mr-2 flex-shrink-0" />
-                      <span className="line-clamp-1">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                {isInCart ? (
-                  <div className="flex flex-row gap-2 items-end">
+                ) : (
+                  <div className="flex items-center justify-center gap-8 mb-4">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-gray-800">{service.price}</div>
+                      <div className="text-xs text-gray-400 mt-1">Regular</div>
+                    </div>
+                    <div className="border-l border-gray-200 h-8"></div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[#98A869]">{service.memberPrice}</div>
+                      <div className="text-xs text-[#98A869] mt-1">Member</div>
+                    </div>
+                  </div>
+                )}
+                <p className="text-sm text-gray-600 mb-4">{service.description}</p>
+                {quantity === 0 ? (
+                  <button
+                    onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
+                    className="mt-auto w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
+                  >
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Add to Cart
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2 mt-auto">
                     <Link to="/cart" className="flex-1">
                       <button
-                        style={{ minWidth: 0, width: '100%' }}
-                        className="w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm flex items-center justify-center"
+                        className="w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
                         Go to Cart
                       </button>
                     </Link>
-                    <div className="flex flex-col items-end ml-1">
+                    <div className="relative">
                       <button
-                        onClick={() => {
-                          toast.dismiss();
-                          addToCart(service);
-                          toast.success('Service added to cart!');
-                        }}
-                        className="relative bg-white border-2 border-[#98A869] text-[#98A869] text-center py-2 sm:py-2.5 rounded-lg font-semibold hover:bg-[#98A869]/10 transition-colors duration-200 text-sm flex items-center justify-center min-w-[48px] px-3"
+                        onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
+                        className="w-10 h-10 bg-white border-2 border-[#98A869] text-[#98A869] rounded-full flex items-center justify-center text-xl font-bold hover:bg-[#98A869]/10 transition"
+                        aria-label="Add one more"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        {(() => {
-                          const cartItem = cartItems.find(item => item.title === service.title);
-                          return cartItem && cartItem.quantity > 0 ? (
-                            <span className="absolute -top-1 -right-1 bg-[#98A869] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                              {cartItem.quantity}
-                            </span>
-                          ) : null;
-                        })()}
+                        +
                       </button>
+                      <span className="absolute -top-2 -right-2 bg-[#98A869] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                        {quantity}
+                      </span>
                     </div>
                   </div>
-                ) : (
-                  <button
-                    onClick={() => {
-                      toast.dismiss();
-                      addToCart(service);
-                      toast.success('Service added to cart!');
-                    }}
-                    className="block w-full py-2 sm:py-2.5 bg-[#98A869] text-white text-center rounded-lg hover:bg-[#98A869]/90 transition-colors duration-200 text-sm flex items-center justify-center"
-                  >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add to Cart
-                  </button>
                 )}
               </motion.div>
             );

@@ -84,22 +84,10 @@ const About = () => {
           variants={fadeIn}
         >
           <h2 className="text-4xl font-bold text-center mb-12 text-[#98A869]">Who We Are</h2>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            
-            {/* Left - Image */}
-            {/* <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#98A869] to-[#FEDEB8] rounded-3xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-              <img 
-                src="/images/aboutUs.jpeg" 
-                alt="Spa Treatment Room" 
-                className="relative w-full h-full object-cover rounded-3xl shadow-lg transform group-hover:scale-[1.02] transition duration-700"
-              />
-            </div> */}
-
-            {/* Right - Text */}
-            <div className="space-y-6 text-justify sm:text-left">
+          <div className="mt-6">
+            <div className="space-y-6 text-justify">
               <p className="text-[#98A869]/90 text-lg leading-relaxed">
-                Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad’s finest women’s wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
+                Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad's finest women's wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
               </p>
               <p className="text-[#98A869]/80 text-lg leading-relaxed">Led by a passionate expert, every session is crafted with love, skill, and true attention to your wellbeing. Here, self-care becomes an art — and every visit, a journey back to yourself. Experience relaxation, transformation, and pure magic. Only at N Wellness.
               </p>
