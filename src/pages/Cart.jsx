@@ -26,31 +26,14 @@ function toInputDateFormat(dateStr) {
   return dateStr;
 }
 
-// Utility to format 24-hour time (HH:mm) to 12-hour format with AM/PM
-function formatTime12Hour(timeStr) {
-  if (!timeStr) return '';
-  const [hour, minute] = timeStr.split(':').map(Number);
+// Utility to format time in 12-hour format with AM/PM
+function formatTime12Hour(time24) {
+  if (!time24) return '';
+  const [hourStr, minute] = time24.split(':');
+  let hour = parseInt(hourStr, 10);
   const ampm = hour >= 12 ? 'PM' : 'AM';
-  const hour12 = hour % 12 === 0 ? 12 : hour % 12;
-  return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
-}
-
-// Utility to check if a slot is in the future
-function isFutureTimeSlot(dateStr, timeStr) {
-  const now = new Date();
-  const [year, month, day] = dateStr.split('-').map(Number);
-  const [hour, minute] = timeStr.split(':').map(Number);
-  const slotDate = new Date(year, month - 1, day, hour, minute, 0, 0);
-  return slotDate > now;
-}
-
-// Utility to check if a date is today or in the future
-function isTodayOrFuture(dateStr) {
-  const today = new Date();
-  const [year, month, day] = dateStr.split('-').map(Number);
-  const selected = new Date(year, month - 1, day, 0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
-  return selected >= today;
+  hour = hour % 12 || 12; // Convert 0 to 12 for 12 AM
+  return `${hour}:${minute} ${ampm}`;
 }
 
 const Cart = () => {
@@ -67,6 +50,7 @@ const Cart = () => {
   });
   const [availableSlots, setAvailableSlots] = useState([]);
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+  const [isDateInvalid, setIsDateInvalid] = useState(false);
 
   // Get minimum date (today)
   const getMinDate = () => {
@@ -80,12 +64,12 @@ const Cart = () => {
   // Fetch available time slots when date changes
   const fetchAvailableSlots = async (date) => {
     const trimmedDate = date.trim();
+    console.log('Fetching slots for date:', trimmedDate);
     try {
       setIsLoadingSlots(true);
       setError(null);
       
-      const response = await axios.get(`https://spabackend-1.onrender.com/api/booking/available-slots/${trimmedDate}`);
-      
+      const response = await axios.get(`https://spabackend-nd53.onrender.com/api/booking/available-slots/${trimmedDate}`);
       if (response.data && response.data.slots) {
         setAvailableSlots(response.data.slots);
       } else {
@@ -103,16 +87,24 @@ const Cart = () => {
   const handleCustomerDetailsChange = async (e) => {
     const { name, value } = e.target;
     let newValue = value;
-    
     if (name === 'date') {
       newValue = toInputDateFormat(value);
+      // Check if the date is in the past
+      const today = getMinDate();
+      if (newValue && newValue < today) {
+        setIsDateInvalid(true);
+        setError('Please select a valid (future) date.');
+      } else {
+        setIsDateInvalid(false);
+        setError(null);
+      }
     }
-    
     setCustomerDetails(prev => ({
       ...prev,
       [name]: newValue
     }));
 
+    // Reset time selection and fetch available slots when date changes
     if (name === 'date') {
       setCustomerDetails(prev => ({
         ...prev,
@@ -129,35 +121,35 @@ const Cart = () => {
   const handleCustomerDetailsSubmit = async (e) => {
     e.preventDefault();
     const trimmedDate = customerDetails.date.trim();
-    
+    const today = getMinDate();
+    console.log('Comparing:', trimmedDate, '<', today, '=', trimmedDate < today);
+    if (trimmedDate < today) {
+      setError('Please select a valid (future) date.');
+      return;
+    }
+    console.log('Submitting booking for date:', trimmedDate, 'time:', customerDetails.time);
+    // Validate date and time
     if (!trimmedDate || !customerDetails.time) {
       setError('Please select both date and time');
       return;
     }
-    // Prevent booking with a past date
-    if (!isTodayOrFuture(trimmedDate)) {
-      setError('Please select today or a future date');
-      return;
-    }
-
     try {
-      const { data } = await axios.post('https://spabackend-1.onrender.com/api/booking/check-availability', {
+      // Check if the selected time slot is still available
+      const { data } = await axios.post('https://spabackend-nd53.onrender.com/api/booking/check-availability', {
         date: trimmedDate,
         time: customerDetails.time
       });
-
       if (!data.available) {
         setError(data.reason || 'This time slot is no longer available. Please select another time.');
         return;
       }
-
-      await axios.post('https://spabackend-1.onrender.com/api/booking/create', {
+      // Create booking
+      await axios.post('https://spabackend-nd53.onrender.com/api/booking/create', {
         date: trimmedDate,
         time: customerDetails.time,
         customerDetails,
         cartItems
       });
-
       setShowCustomerForm(false);
       await handlePayment();
     } catch (error) {
@@ -171,11 +163,13 @@ const Cart = () => {
       setIsProcessing(true);
       setError(null);
 
-      const { data: order } = await axios.post('https://spabackend-1.onrender.com/api/payment/create-order', {
+      // Create order
+      const { data: order } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/create-order', {
         amount: getTotalDeposit(),
         customerDetails
       });
 
+      // Initialize Razorpay
       const options = {
         key: 'rzp_test_ReXn9wfeuRe6JK',
         amount: order.amount,
@@ -185,7 +179,8 @@ const Cart = () => {
         order_id: order.id,
         handler: async function (response) {
           try {
-            const { data } = await axios.post('https://spabackend-1.onrender.com/api/payment/verify-payment', {
+            // Verify payment
+            const { data } = await axios.post('https://spabackend-nd53.onrender.com/api/payment/verify-payment', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -479,10 +474,15 @@ const Cart = () => {
                     onChange={handleCustomerDetailsChange}
                     required
                     min={getMinDate()}
-                    className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869] [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                    pattern="\\d{4}-\\d{2}-\\d{2}"
+                    inputMode="none"
+                    className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#98A869]/20 focus:border-[#98A869] [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer ${isDateInvalid ? 'border-red-500 ring-red-200' : 'border-gray-200'}`}
                   />
                   <Calendar className="absolute right-3 top-2.5 w-5 h-5 text-gray-400 pointer-events-none" />
                 </div>
+                {isDateInvalid && (
+                  <p className="text-xs text-red-600 mt-1 font-semibold">Please select a valid (future) date.</p>
+                )}
               </div>
               <div>
                 <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">
@@ -502,18 +502,11 @@ const Cart = () => {
                     {isLoadingSlots ? (
                       <option value="" disabled>Loading available slots...</option>
                     ) : availableSlots.length > 0 ? (
-                      availableSlots
-                        .filter(slot => {
-                          if (customerDetails.date === getMinDate()) {
-                            return isFutureTimeSlot(customerDetails.date, slot);
-                          }
-                          return true;
-                        })
-                        .map((slot) => (
-                          <option key={slot} value={slot}>
-                            {formatTime12Hour(slot)}
-                          </option>
-                        ))
+                      availableSlots.map((slot) => (
+                        <option key={slot} value={slot}>
+                          {formatTime12Hour(slot)}
+                        </option>
+                      ))
                     ) : (
                       <option value="" disabled>No slots available</option>
                     )}

@@ -130,18 +130,18 @@ const Navbar = () => {
               </li>
             </ul>
             <div className="mt-8">
-              {/* <Link
+              <Link
                 to="/services"
                 className="block w-full text-center px-6 py-3 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-colors duration-200 shadow-sm"
                 onClick={toggleMobileMenu}
               >
                 Get Started
-              </Link> */}
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </>     
+    </>
   );
 };
 
