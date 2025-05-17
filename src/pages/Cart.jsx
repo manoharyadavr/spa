@@ -62,12 +62,10 @@ const Cart = () => {
   // Fetch available time slots when date changes
   const fetchAvailableSlots = async (date) => {
     const trimmedDate = date.trim();
-    console.log('Fetching slots for date:', trimmedDate);
     try {
       setIsLoadingSlots(true);
       setError(null);
       
-      // const response = await axios.get(`http://localhost:5000/api/booking/available-slots/${trimmedDate}`);
       const response = await axios.get(`https://spabackend-1.onrender.com/api/booking/available-slots/${trimmedDate}`);
       
       if (response.data && response.data.slots) {
@@ -87,17 +85,16 @@ const Cart = () => {
   const handleCustomerDetailsChange = async (e) => {
     const { name, value } = e.target;
     let newValue = value;
-    // Ensure date is always in YYYY-MM-DD for the input
+    
     if (name === 'date') {
       newValue = toInputDateFormat(value);
-      console.log('Date input value:', value, 'Converted:', newValue);
     }
+    
     setCustomerDetails(prev => ({
       ...prev,
       [name]: newValue
     }));
 
-    // Reset time selection and fetch available slots when date changes
     if (name === 'date') {
       setCustomerDetails(prev => ({
         ...prev,
@@ -114,19 +111,13 @@ const Cart = () => {
   const handleCustomerDetailsSubmit = async (e) => {
     e.preventDefault();
     const trimmedDate = customerDetails.date.trim();
-    console.log('Submitting booking for date:', trimmedDate, 'time:', customerDetails.time);
-    // Validate date and time
+    
     if (!trimmedDate || !customerDetails.time) {
       setError('Please select both date and time');
       return;
     }
 
     try {
-      // Check if the selected time slot is still available
-      // const { data } = await axios.post('http://localhost:5000/api/booking/check-availability', {
-      //   date: trimmedDate,
-      //   time: customerDetails.time
-      // });
       const { data } = await axios.post('https://spabackend-1.onrender.com/api/booking/check-availability', {
         date: trimmedDate,
         time: customerDetails.time
@@ -137,20 +128,12 @@ const Cart = () => {
         return;
       }
 
-      // Create booking
-      // await axios.post('http://localhost:5000/api/booking/create', {
-      //   date: trimmedDate,
-      //   time: customerDetails.time,
-      //   customerDetails,
-      //   cartItems
-      // });
       await axios.post('https://spabackend-1.onrender.com/api/booking/create', {
         date: trimmedDate,
         time: customerDetails.time,
         customerDetails,
         cartItems
       });
-
 
       setShowCustomerForm(false);
       await handlePayment();
@@ -165,17 +148,11 @@ const Cart = () => {
       setIsProcessing(true);
       setError(null);
 
-      // Create order
-      // const { data: order } = await axios.post('http://localhost:5000/api/payment/create-order', {
-      //   amount: getTotalDeposit(),
-      //   customerDetails
-      // });
       const { data: order } = await axios.post('https://spabackend-1.onrender.com/api/payment/create-order', {
         amount: getTotalDeposit(),
         customerDetails
       });
 
-      // Initialize Razorpay
       const options = {
         key: 'rzp_test_ReXn9wfeuRe6JK',
         amount: order.amount,
@@ -185,14 +162,6 @@ const Cart = () => {
         order_id: order.id,
         handler: async function (response) {
           try {
-            // Verify payment
-            // const { data } = await axios.post('http://localhost:5000/api/payment/verify-payment', {
-            //   razorpay_order_id: response.razorpay_order_id,
-            //   razorpay_payment_id: response.razorpay_payment_id,
-            //   razorpay_signature: response.razorpay_signature,
-            //   cartItems,
-            //   customerDetails
-            // });
             const { data } = await axios.post('https://spabackend-1.onrender.com/api/payment/verify-payment', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -335,6 +304,51 @@ const Cart = () => {
                       )}
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-2 mt-2 mb-2">
+              {cartItems.map((item, index) => {
+                const isSignature = item.title === 'N Wellness Signature Body Treatment';
+                const memberPrice = `₹${(parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * 0.6).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+                const total = (parseFloat(item.price.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString();
+                const deposit = (parseFloat(item.deposit.replace('₹', '').replace(/,/g, '')) * (item.quantity || 1)).toLocaleString();
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mb-6 pb-6 border-b last:border-b-0 last:mb-0 last:pb-0"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-24 h-24 object-cover rounded-lg mb-3 sm:mb-0"
+                    />
+                    <div className="flex-grow w-full">
+                      <h3 className="text-lg font-semibold text-[#98A869] mb-1">{item.title}</h3>
+                      <p className="text-gray-600 text-sm mb-2">{item.description}</p>
+                      <div className="flex items-center text-gray-500 text-sm mb-2">
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span>{item.duration}</span>
+                      </div>
+                      {/* Price Row */}
+                      {!isSignature ? (
+                        <div className="flex items-center gap-6 mb-2">
+                          <div className="text-center">
+                            <div className="text-base font-bold text-gray-800">{item.price}</div>
+                            <div className="text-xs text-gray-400 mt-1">Regular</div>
+                          </div>
+                          <div className="border-l border-gray-200 h-8"></div>
+                          <div className="text-center flex flex-col items-center">
+                            <span className="text-base font-bold text-[#98A869]">{memberPrice}</span>
+                            <div className="text-xs text-[#98A869] mt-1">Member</div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mb-2">
+                          <span className="text-lg font-bold text-[#98A869]">{item.price}</span>
+                        </div>
+                      )}
+                      {/* Quantity Controls */}
+                      <div className="flex items-center gap-2 mt-2 mb-2">
                         <button
                           onClick={() => decrementQuantity(item.title)}
                           className="w-8 h-8 rounded-full border border-gray-300 text-[#98A869] text-lg font-bold flex items-center justify-center hover:bg-[#FEDEB8]/40 transition-colors duration-200"
@@ -360,6 +374,28 @@ const Cart = () => {
                           +
                         </button>
                       </div>
+                      {/* Total & Deposit */}
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-2">
+                        <div>
+                          <span className="text-gray-500 text-xs">Total: </span>
+                          <span className="text-[#98A869] font-semibold">₹{total}</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-400 text-xs">Deposit (20%): </span>
+                          <span className="text-gray-700 font-semibold">₹{deposit}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item.title)}
+                      className="mt-2 sm:mt-0 sm:ml-2 text-red-500 hover:text-red-600 transition-colors duration-200 self-end"
+                      aria-label="Remove item"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </motion.div>
+                );
+              })}
                       {/* Total & Deposit */}
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-2">
                         <div>
