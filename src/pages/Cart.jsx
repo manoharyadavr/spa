@@ -502,7 +502,7 @@ const Cart = () => {
                   </select>
                   <Clock className="absolute right-3 top-2.5 w-5 h-5 text-gray-400 pointer-events-none" />
                 </div>
-                {customerDetails.date === getMinDate() && (
+                {toInputDateFormat(customerDetails.date) === getMinDate() && (
                   <p className="text-xs text-gray-500 mt-1">
                     Only future time slots are available for today
                   </p>
