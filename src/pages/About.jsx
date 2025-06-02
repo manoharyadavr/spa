@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
+import useScrollToTop from '../hooks/useScrollToTop';
 
 // Animation Variants
 const fadeIn = {
@@ -10,6 +11,8 @@ const fadeIn = {
 };
 
 const About = () => {
+  useScrollToTop();
+
   return (
     <div className="min-h-screen bg-[#FEDEB8]/5 text-[#98A869]">
       

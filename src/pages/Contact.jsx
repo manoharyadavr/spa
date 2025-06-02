@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import useScrollToTop from '../hooks/useScrollToTop';
 
 const Contact = () => {
+  useScrollToTop();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',

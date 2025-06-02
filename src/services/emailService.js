@@ -11,11 +11,3 @@ export const sendContactEmail = async (contactData) => {
   }
 };
 
-export const sendBookingEmail = async (bookingData) => {
-  try {
-    const response = await axios.post(`${API_URL}/email/booking`, bookingData);
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { error: 'Failed to send booking email' };
-  }
-}; 

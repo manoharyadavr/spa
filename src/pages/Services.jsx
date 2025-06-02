@@ -11,35 +11,71 @@ import {
   Star,
   Award,
   Leaf,
-  Flower2,
-  ShoppingCart
+  Flower2
 } from "lucide-react";
-import { useCart } from '../context/CartContext';
 import { toast } from 'react-hot-toast';
+import useScrollToTop from '../hooks/useScrollToTop';
 
 // Animation Variants
-const fadeInUp = {
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { 
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1], // Custom easing for smooth motion
+      staggerChildren: 0.1
+    },
+  },
+};
+
+const cardVariants = {
   hidden: { 
     opacity: 0, 
-    y: 20,
-    scale: 0.98
+    y: 40,
+    scale: 0.95
   },
   visible: (i) => ({
     opacity: 1,
     y: 0,
     scale: 1,
     transition: { 
-      delay: i * 0.03,
-      duration: 0.4,
-      ease: [0.2, 0.65, 0.3, 0.9],
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
       opacity: {
-        duration: 0.2
+        duration: 0.4
       },
       scale: {
-        duration: 0.3
+        duration: 0.5
       }
     },
   }),
+};
+
+const imageVariants = {
+  hidden: { scale: 1.1, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
 };
 
 const pageTransition = {
@@ -226,8 +262,9 @@ const servicesWithMemberPrice = services.map(service => ({
 }));
 
 const Services = () => {
+  useScrollToTop();
+  
   const [isMounted, setIsMounted] = React.useState(false);
-  const { addToCart, cartItems } = useCart();
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -250,14 +287,14 @@ const Services = () => {
         className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-center text-center overflow-hidden"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Background Image */}
         <motion.div 
           className="absolute w-full h-full"
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         >
           <img 
             src="/images/servicesBreadCrumb.jpg"
@@ -272,23 +309,35 @@ const Services = () => {
           className="relative z-10 text-center px-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-white">Our Services</h1>
-          <p className="text-lg text-white/90 mt-3">
+          <motion.h1 
+            className="text-4xl sm:text-5xl font-bold text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Our Services
+          </motion.h1>
+          <motion.p 
+            className="text-lg text-white/90 mt-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
             Experience premium wellness treatments designed for your well-being
-          </p>
+          </motion.p>
 
           {/* Breadcrumb */}
           <motion.div
             className="mt-4 bg-white/10 backdrop-blur-sm px-4 py-2 inline-block rounded-lg"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
+            transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <nav className="text-sm text-white">
-              <Link to="/" className="hover:text-[#FEDEB8] font-semibold">Home</Link>
-              <span className="mx-2">/</span> 
+              <Link to="/" className="hover:text-[#FEDEB8] font-semibold transition-colors duration-300">Home</Link>
+              <span className="mx-2">/</span>
               <span className="text-[#FEDEB8]">Services</span>
             </nav>
           </motion.div>
@@ -298,79 +347,66 @@ const Services = () => {
       {/* Services Section */}
       <motion.div 
         className="container mx-auto px-4 py-12 sm:py-20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.3 }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeIn}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {servicesWithMemberPrice.map((service, index) => {
             const isLastService = index === servicesWithMemberPrice.length - 1;
-            const cartItem = cartItems.find(item => item.title === service.title);
-            const quantity = cartItem ? cartItem.quantity || 1 : 0;
             return (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl shadow-lg flex flex-col h-full p-6 transition hover:shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="bg-white rounded-2xl shadow-lg flex flex-col h-full overflow-hidden transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
               >
-                <img src={service.image} alt={service.title} className="w-full h-36 object-cover rounded-xl mb-4" />
-                <h2 className="text-xl font-bold text-[#98A869] mb-1">{service.title}</h2>
-                <div className="text-gray-500 text-sm mb-3">{service.duration}</div>
-                {isLastService ? (
-                  <div className="flex items-center justify-center gap-8 mb-4">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
+                <motion.div 
+                  className="relative w-full h-48 overflow-hidden"
+                  variants={imageVariants}
+                >
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110"
+                  />
+                </motion.div>
+                <motion.div 
+                  className="p-6"
+                  variants={textVariants}
+                >
+                  <h2 className="text-xl font-bold text-[#98A869] mb-1">{service.title}</h2>
+                  <div className="text-gray-500 text-sm mb-3">{service.duration}</div>
+                  {isLastService ? (
+                    <div className="flex items-center justify-center gap-8 mb-4">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-8 mb-4">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-gray-800">{service.price}</div>
-                      <div className="text-xs text-gray-400 mt-1">Regular</div>
+                  ) : (
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
+                      </div>
                     </div>
-                    <div className="border-l border-gray-200 h-8"></div>
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-[#98A869]">{service.memberPrice}</div>
-                      <div className="text-xs text-[#98A869] mt-1">Member</div>
-                    </div>
-                  </div>
-                )}
-                <p className="text-sm text-gray-600 mb-4">{service.description}</p>
-                {quantity === 0 ? (
-                  <button
-                    onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
-                    className="mt-auto w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
+                  )}
+                  <p className="text-sm text-gray-600 mb-4">{service.description}</p>
+                  <motion.a
+                    href={service.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition-all duration-300 flex items-center justify-center"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add to Cart
-                  </button>
-                ) : (
-                  <div className="flex items-center gap-2 mt-auto">
-                    <Link to="/cart" className="flex-1">
-                      <button
-                        className="w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
-                      >
-                        <ShoppingCart className="w-4 h-4 mr-2" />
-                        Go to Cart
-                      </button>
-                    </Link>
-                    <div className="relative">
-                      <button
-                        onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
-                        className="w-10 h-10 bg-white border-2 border-[#98A869] text-[#98A869] rounded-full flex items-center justify-center text-xl font-bold hover:bg-[#98A869]/10 transition"
-                        aria-label="Add one more"
-                      >
-                        +
-                      </button>
-                      <span className="absolute -top-2 -right-2 bg-[#98A869] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                        {quantity}
-                      </span>
-                    </div>
-                  </div>
-                )}
+                    Book Now
+                  </motion.a>
+                </motion.div>
               </motion.div>
             );
           })}

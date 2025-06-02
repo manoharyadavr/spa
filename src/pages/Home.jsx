@@ -3,39 +3,78 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award, Flower2 } from "lucide-react";
+import { toast } from 'react-hot-toast';
+import useScrollToTop from '../hooks/useScrollToTop';
+
+// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { CheckCircle, Clock, Leaf, Gem, Footprints, Smile, Star, Crown, Music, Award, Flower2, ShoppingCart } from "lucide-react";
-import { useCart } from '../context/CartContext';
-import { toast } from 'react-hot-toast';
 
 // Animation Variants
 const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { 
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1], // Custom easing for smooth motion
+      staggerChildren: 0.1
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 40,
+    scale: 0.95
+  },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { 
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+      opacity: {
+        duration: 0.4
+      },
+      scale: {
+        duration: 0.5
+      }
+    },
+  }),
+};
+
+const imageVariants = {
+  hidden: { scale: 1.1, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const textVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
 };
 
 const carouselSlides = [
-  // {
-  //   image: "/images/image1.png",
-  //   title: "Experience Ultimate Relaxation",
-  //   subtitle: "Discover our premium wellness services",
-  // },
-  // {
-  //   image: "/images/image2.png",
-  //   title: "Holistic Wellness Journey",
-  //   subtitle: "Transform your mind, body, and soul",
-  // },
-  // {
-  //   image: "/images/image3.png",
-  //   title: "Luxury Spa Treatments",
-  //   subtitle: "Indulge in our signature therapies",
-  // },
   {
     image: "/images/image4.png",
     title: "N Wellness Membership",
@@ -143,36 +182,9 @@ const services = [
   }
 ];
 
-// const testimonials = [
-//   {
-//     name: "Sarah Johnson",
-//     designation: "Yoga Enthusiast",
-//     company: "Wellness Journey",
-//     logo: "https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg",
-//     message: "The personalized wellness approach has completely transformed my daily routine. I feel more energized and balanced than ever before.",
-//     rating: 5,
-//   },
-//   {
-//     name: "Michael Chen",
-//     designation: "Business Professional",
-//     company: "Corporate Wellness",
-//     logo: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-//     message: "The expert guidance and support have helped me manage stress and improve my overall well-being. Highly recommended!",
-//     rating: 4.5,
-//   },
-//   {
-//     name: "Emma Rodriguez",
-//     designation: "Fitness Instructor",
-//     company: "Health & Wellness",
-//     logo: "https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg",
-//     message: "The holistic approach to wellness has been life-changing. I've found a perfect balance between physical and mental health.",
-//     rating: 5,
-//   },
-// ];
-
 const Home = () => {
+  useScrollToTop();
   const testimonialRef = useRef(null);
-  const { addToCart, cartItems } = useCart();
 
   const scrollLeft = () => {
     if (testimonialRef.current) {
@@ -194,98 +206,19 @@ const Home = () => {
 
   return (
     <div className="bg-[#FEDEB8]/5 text-[#98A869]">
-      {/* Carousel Section */}
-      <Swiper
-        modules={[Autoplay, Pagination, Navigation]}
-        spaceBetween={0}
-        slidesPerView={1}
-        autoplay={{ 
-          delay: 1000, // 5 seconds per slide
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true 
-        }}
-        loop={true}
-        pagination={{ 
-          clickable: true,
-          dynamicBullets: true,
-          renderBullet: (index, className) => {
-            return `<span class="${className}"></span>`;
-          }
-        }}
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
-        className="w-full h-[400px] sm:h-[500px] relative bg-[#98A869]/5"
-      >
-        {carouselSlides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="relative w-full h-full">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
-              <div className="absolute inset-0 flex items-center justify-center text-center px-4">
-                <div className="max-w-4xl mx-auto">
-                  <motion.h1
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                  >
-                    {slide.title}
-                  </motion.h1>
-                  <motion.p
-                    className="text-sm sm:text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                  >
-                    {slide.subtitle}
-                    {slide.details && (
-                      <ul className="mt-4 space-y-2">
-                        {slide.details.map((detail, i) => (
-                          <li key={i} className="flex items-center">
-                            <CheckCircle className="w-4 h-4 mr-2" />
-                            {detail}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    {slide.cta && (
-                      <p className="mt-4 text-sm italic">{slide.cta}</p>
-                    )}
-                  </motion.p>
-                  {index === carouselSlides.length - 1 ? (
-                    <a href="https://wa.me/919391803316?text=Hi,%20I%20am%20interested%20in%20the%20N%20Wellness%20Membership.%20Could%20you%20please%20provide%20more%20information%20about%20the%20benefits%20and%20how%20to%20join?" target="_blank" rel="noopener noreferrer">
-                      <motion.button
-                        className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-xs sm:text-sm"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Book Now
-                      </motion.button>
-                    </a>
-                  ) : (
-                    <Link to="/services">
-                      <motion.button
-                        className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#98A869] text-white rounded-full hover:bg-[#98A869]/90 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-xs sm:text-sm"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Explore Our Services
-                      </motion.button>
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {/* Hero Section */}
+      <div className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[550px]">
+        <video
+          src="/video/nwellness.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+       
+      </div>
       {/* About Section */}
        <motion.div 
          className="w-full px-4 sm:px-6 py-12 sm:py-20 bg-white"
@@ -302,48 +235,37 @@ const Home = () => {
          >
            About Our N Wellness Studio
          </motion.h2>
-         <div className="max-w-4xl mx-auto">
-           <motion.div
-             initial={{ opacity: 0, x: -20 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true }}
-             transition={{ duration: 0.6 }}
-           >
-            <p className="text-[#98A869]/90 text-lg leading-relaxed">
-                Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad's finest women's wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
-              </p>
-              <p className="text-[#98A869]/80 text-lg leading-relaxed">Led by a passionate expert, every session is crafted with love, skill, and true attention to your wellbeing. Here, self-care becomes an art — and every visit, a journey back to yourself. Experience relaxation, transformation, and pure magic. Only at N Wellness.
-              </p>
-             {/* <div className="space-y-3 sm:space-y-4">
-               {["Personalized wellness plans", "Expert practitioners", "State-of-the-art facilities"].map((item, index) => (
-                 <motion.div 
-                   key={index}
-                   className="flex items-center space-x-3"
-                   initial={{ opacity: 0, x: -20 }}
-                   whileInView={{ opacity: 1, x: 0 }}
-                   viewport={{ once: true }}
-                   transition={{ delay: index * 0.1 }}
-                 >
-                   <CheckCircle className="text-[#98A869] w-5 h-5 sm:w-6 sm:h-6" />
-                   <span className="text-[#98A869]/90 text-sm sm:text-base">{item}</span>
-                 </motion.div>
-               ))}
-             </div> */}
-           </motion.div>
-           {/* <motion.div 
-             className="relative group mt-8 md:mt-0"
-             initial={{ opacity: 0, x: 20 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true }}
-             transition={{ duration: 0.6 }}
-           >
-             <div className="absolute -inset-1 bg-gradient-to-r from-[#98A869] to-[#FEDEB8] rounded-3xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-             <img
-               src="/images/aboutUs.jpeg"
-               alt="Wellness Center Interior"
-               className="relative w-full h-full object-cover rounded-3xl shadow-xl transform group-hover:scale-[1.02] transition duration-700"
-             />
-           </motion.div> */}
+         <div className="max-w-6xl mx-auto">
+           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+             <motion.div 
+               className="relative group order-2 lg:order-1"
+               initial={{ opacity: 0, x: 20 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6 }}
+             >
+               <div className="absolute -inset-1 bg-gradient-to-r from-[#98A869] to-[#FEDEB8] rounded-3xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+               <img
+                 src="/video/aboutImg.DNG"
+                 alt="N Wellness Studio Interior"
+                 className="relative w-full h-[300px] object-cover rounded-3xl shadow-xl transform group-hover:scale-[1.02] transition duration-700"
+               />
+             </motion.div>
+             <motion.div
+               className="order-1 lg:order-2"
+               initial={{ opacity: 0, x: -20 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6 }}
+             >
+               <p className="text-[#98A869]/90 text-lg leading-relaxed">
+                 Welcome to <strong className="text-[#98A869] text-xl">N Wellness</strong> — Hyderabad's finest women's wellness studio. Born from a dream to create more than a spa, N Wellness offers soul-soothing therapies, signature Japanese Head Spa experiences, and a space where every woman feels deeply cared for.
+               </p>
+               <p className="text-[#98A869]/80 text-lg leading-relaxed">
+                 Led by a passionate expert, every session is crafted with love, skill, and true attention to your wellbeing. Here, self-care becomes an art — and every visit, a journey back to yourself. Experience relaxation, transformation, and pure magic. Only at N Wellness.
+               </p>
+             </motion.div>
+           </div>
          </div>
        </motion.div>
 
@@ -355,76 +277,67 @@ const Home = () => {
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeIn}
       >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Our Signature Services</h2>
+        <motion.h2 
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16"
+          variants={textVariants}
+        >
+          Our Signature Services
+        </motion.h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {servicesWithMemberPrice.map((service, index) => {
             const isLastService = index === servicesWithMemberPrice.length - 1;
-            const cartItem = cartItems.find(item => item.title === service.title);
-            const quantity = cartItem ? cartItem.quantity || 1 : 0;
             return (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl shadow-lg flex flex-col h-full p-6 transition hover:shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="bg-white rounded-2xl shadow-lg flex flex-col h-full overflow-hidden transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
               >
-                <img src={service.image} alt={service.title} className="w-full h-36 object-cover rounded-xl mb-4" />
-                <h2 className="text-xl font-bold text-[#98A869] mb-1">{service.title}</h2>
-                <div className="text-gray-500 text-sm mb-3">{service.duration}</div>
-                {isLastService ? (
-                  <div className="flex items-center justify-center gap-8 mb-4">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
+                <motion.div 
+                  className="relative w-full h-48 overflow-hidden"
+                  variants={imageVariants}
+                >
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110"
+                  />
+                </motion.div>
+                <motion.div 
+                  className="p-6"
+                  variants={textVariants}
+                >
+                  <h2 className="text-xl font-bold text-[#98A869] mb-1">{service.title}</h2>
+                  <div className="text-gray-500 text-sm mb-3">{service.duration}</div>
+                  {isLastService ? (
+                    <div className="flex items-center justify-center gap-8 mb-4">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-8 mb-4">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-gray-800">{service.price}</div>
-                      <div className="text-xs text-gray-400 mt-1">Regular</div>
+                  ) : (
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-[#98A869]">{service.price}</div>
+                      </div>
                     </div>
-                    <div className="border-l border-gray-200 h-8"></div>
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-[#98A869]">{service.memberPrice}</div>
-                      <div className="text-xs text-[#98A869] mt-1">Member</div>
-                    </div>
-                  </div>
-                )}
-                <p className="text-sm text-gray-600 mb-4">{service.description}</p>
-                {quantity === 0 ? (
-                  <button
-                    onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
-                    className="mt-auto w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
+                  )}
+                  <p className="text-sm text-gray-600 mb-4">{service.description}</p>
+                  <motion.a
+                    href={service.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition-all duration-300 flex items-center justify-center"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add to Cart
-                  </button>
-                ) : (
-                  <div className="flex items-center gap-2 mt-auto">
-                    <Link to="/cart" className="flex-1">
-                      <button
-                        className="w-full py-2 bg-[#98A869] text-white rounded-lg font-semibold hover:bg-[#7a8d4a] transition flex items-center justify-center"
-                      >
-                        <ShoppingCart className="w-4 h-4 mr-2" />
-                        Go to Cart
-                      </button>
-                    </Link>
-                    <div className="relative">
-                      <button
-                        onClick={() => { addToCart(service); toast.success('Service added to cart!'); }}
-                        className="w-10 h-10 bg-white border-2 border-[#98A869] text-[#98A869] rounded-full flex items-center justify-center text-xl font-bold hover:bg-[#98A869]/10 transition"
-                        aria-label="Add one more"
-                      >
-                        +
-                      </button>
-                      <span className="absolute -top-2 -right-2 bg-[#98A869] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                        {quantity}
-                      </span>
-                    </div>
-                  </div>
-                )}
+                    Book Now
+                  </motion.a>
+                </motion.div>
               </motion.div>
             );
           })}
@@ -440,7 +353,12 @@ const Home = () => {
         variants={fadeIn}
       >
         <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16">Why Choose N Wellness</h2>
+          <motion.h2 
+            className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16"
+            variants={textVariants}
+          >
+            Why Choose N Wellness
+          </motion.h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
             {[
               {
@@ -461,21 +379,36 @@ const Home = () => {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="bg-[#FEDEB8]/5 p-4 sm:p-6 rounded-2xl shadow-lg text-center hover:bg-[#FEDEB8]/10 transition-colors duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="bg-[#FEDEB8]/5 p-4 sm:p-6 rounded-2xl shadow-lg text-center hover:bg-[#FEDEB8]/10 transition-all duration-500"
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ delay: index * 0.2 }}
+                whileHover={{ y: -5, scale: 1.02 }}
               >
-                <div className="relative w-16 h-16 sm:w-24 sm:h-24 mx-auto mb-4">
+                <motion.div 
+                  className="relative w-16 h-16 sm:w-24 sm:h-24 mx-auto mb-4"
+                  variants={imageVariants}
+                >
                   <img
                     src={feature.image}
                     alt={feature.title}
-                    className="w-full h-full object-cover rounded-full"
+                    className="w-full h-full object-cover rounded-full transition-transform duration-700 hover:scale-110"
                   />
-                </div>
-                <h3 className="text-base sm:text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-xs sm:text-sm text-gray-600">{feature.description}</p>
+                </motion.div>
+                <motion.h3 
+                  className="text-base sm:text-lg font-semibold mb-2"
+                  variants={textVariants}
+                >
+                  {feature.title}
+                </motion.h3>
+                <motion.p 
+                  className="text-xs sm:text-sm text-gray-600"
+                  variants={textVariants}
+                >
+                  {feature.description}
+                </motion.p>
               </motion.div>
             ))}
           </div>
