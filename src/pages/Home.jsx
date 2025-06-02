@@ -209,7 +209,7 @@ const Home = () => {
       {/* Hero Section */}
       <div className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[550px]">
         <video
-          src="/video/nwellness.mp4"
+          src="../public/video/nwellness.mp4"
           autoPlay
           loop
           muted
